@@ -8,6 +8,99 @@ import XYZ from 'ol/source/XYZ';
 import {toLonLat} from 'ol/proj';
 import {toStringHDMS} from 'ol/coordinate';
 
+/* DATA */
+
+/* set up XMLHttpRequest */
+let url = "./assets/data/Attributs_Visuel_Web.xlsx";
+let oReq = new XMLHttpRequest();
+
+let data = [];
+
+// oReq.onreadystatechange = function(){
+//     if(oReq.status == 200 && oReq.readyState == 4){
+//         url = oReq.responseText;
+//     }
+// };
+
+oReq.open("GET", url, true);
+oReq.responseType = "arraybuffer";
+
+oReq.onload = function(e) {
+    let arraybuffer = oReq.response;
+
+    /* convert data to binary string */
+    let bufferData = new Uint8Array(arraybuffer);
+    let arr = new Array();
+    for (let i = 0; i != bufferData.length; ++i) arr[i] = String.fromCharCode(bufferData[i]);
+    let bstr = arr.join("");
+
+    /* Call XLSX */
+    let workbook = XLSX.read(bstr, {
+        type: "binary"
+    });
+    
+    //console.log("workbook:", workbook);
+
+    /* DO SOMETHING WITH workbook HERE */
+    let sheet_name = workbook.SheetNames[1];
+    /* Get worksheet */
+    let worksheet = workbook.Sheets[sheet_name];
+    //console.log("worksheet:", worksheet);
+
+    let sheetData = XLSX.utils.sheet_to_json(worksheet, {
+        raw: true
+    });
+    console.log("DATA:", sheetData);
+
+    data = getDataFromSheet(sheetData);
+    console.log(data)
+
+    //let keys = Object.keys(sheetData[0]);
+    
+    // console.log("CRUISE NAME:", sheetData[0].cruise_name.split(","));
+    // console.log("VESSEL:", sheetData[0].vessel.split(","));
+    // console.log("CO-CHIEFS:", sheetData[0].co_chiefs.split(","));
+    // console.log("DATES:", sheetData[0].dates.split(","));
+    // console.log("GEOGRAPHIC AREA 1:", sheetData[0].geographic_area_1.split(","));
+    // console.log("GEOGRAPHIC AREA 1:", sheetData[0].geographic_area_2.split(","));
+    // console.log("MAIN OBJECTIVES:", sheetData[0].main_objectives.split(","));
+    // console.log("TOOL 1:", sheetData[0].tool_1.split(","));
+    // console.log("TOOL 2:", sheetData[0].tool_2.split(","));
+    // console.log("TOOL 3:", sheetData[0].tool_3.split(","));
+}
+
+oReq.send();
+
+function getDataFromSheet(sheetData) {
+  let processedData = [];
+
+  sheetData.forEach(element => {
+    let obj = {};
+
+    let name = element.cruise_name.split(", ")[1];
+
+    if ((name != "") && (name != "test") && (name != "NoData")) {
+      const keys = Object.keys(element);
+      const vals = Object.keys(element).map(key => element[key]);
+      
+      for (let i=0; i<keys.length; i++) {
+        let val = vals[i].split(", ")[1];
+
+        if ((val != "") && (val != "test") && (val != "NoData")) {
+          let tempKeyVal = {};
+          tempKeyVal[keys[i]] = val;
+
+          Object.assign(obj, tempKeyVal);
+        }  
+      }
+
+      processedData.push(obj);
+    }
+  });
+
+  return processedData;
+}
+
 /**
  * Elements that make up the popup.
  */
