@@ -8,10 +8,34 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.6/xlsx.full.min.js"></script>
   </head>
   <body>
-    <div id="map"></div>
-    <div id="popup" class="ol-popup">
-      <a href="#" id="popup-closer" class="ol-popup-closer"></a>
-      <div id="popup-content"></div>
+    <div id="container">
+      <div id="info">
+        <h1 class="mission-info">MAP DATA</h1>
+        <div class="mission-container">
+          <div class="mission-info">
+            <h3 class="mission-info-title">cruise_name</h3>
+            <a class="mission-info-data mission-name" href="#">test</a>
+          </div>
+          <div class="mission-info">
+            <h3 class="mission-info-title">co_chiefs</h3>
+            <p class="mission-info-data mission-chiefs">test</p>
+          </div>
+          <div class="mission-info">
+            <h3 class="mission-info-title">dates</h3>
+            <p class="mission-info-data mission-dates">test</p>
+          </div>
+          <div class="mission-info">
+            <h3 class="mission-info-title">vessel</h3>
+            <p class="mission-info-data mission-vessel">test</p>
+          </div>
+        </div>
+      </div>
+      <div id="map">
+        <div id="popup" class="ol-popup">
+          <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+          <div id="popup-content"></div>
+        </div>    
+      </div>
     </div>
     <script type="module" src="./main.js"></script>
   </body>
