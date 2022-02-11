@@ -1,8 +1,15 @@
 /* @import "../../node_modules/ol/ol.css"; */
 
+@font-face {
+  font-family: "Source Code Pro";
+  src: url("../fonts/SourceCodePro-Regular.ttf") format("truetype"),
+}
+
 html, body {
   margin: 0;
   height: 100%;
+  font-family: "Source Code Pro", monospace, Arial, Helvetica, sans-serif;
+  font-size: 12px;
 }
 
 #map {
