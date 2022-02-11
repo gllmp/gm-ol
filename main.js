@@ -9,24 +9,28 @@ import {toLonLat} from 'ol/proj';
 import {toStringHDMS} from 'ol/coordinate';
 
 /* DATA */
-
-/* set up XMLHttpRequest */
-let url = "./assets/data/Attributs_Visuel_Web.xlsx";
-let oReq = new XMLHttpRequest();
-
 let data = [];
 
-// oReq.onreadystatechange = function(){
-//     if(oReq.status == 200 && oReq.readyState == 4){
-//         url = oReq.responseText;
-//     }
-// };
+/* set up XMLHttpRequest */
+function ajaxRequest(url) {
+  return new Promise(function(resolve, reject) {
+    var xhr = new XMLHttpRequest();
+    xhr.onload = function() {
+      resolve(this.response);
+    };
+    xhr.onerror = reject;
+    xhr.open('GET', url);
+    xhr.responseType = "arraybuffer";
+  
+    xhr.send();
+  });
+}
 
-oReq.open("GET", url, true);
-oReq.responseType = "arraybuffer";
+let url = "./assets/data/Attributs_Visuel_Web.xlsx";
 
-oReq.onload = function(e) {
-    let arraybuffer = oReq.response;
+ajaxRequest(url)
+  .then(function(result) {
+    let arraybuffer = result;
 
     /* convert data to binary string */
     let bufferData = new Uint8Array(arraybuffer);
@@ -50,26 +54,19 @@ oReq.onload = function(e) {
     let sheetData = XLSX.utils.sheet_to_json(worksheet, {
         raw: true
     });
-    console.log("DATA:", sheetData);
+    //console.log("SHEET DATA:", sheetData);
 
     data = getDataFromSheet(sheetData);
-    console.log(data)
+    console.log("DATA: ", data);
 
-    //let keys = Object.keys(sheetData[0]);
-    
-    // console.log("CRUISE NAME:", sheetData[0].cruise_name.split(","));
-    // console.log("VESSEL:", sheetData[0].vessel.split(","));
-    // console.log("CO-CHIEFS:", sheetData[0].co_chiefs.split(","));
-    // console.log("DATES:", sheetData[0].dates.split(","));
-    // console.log("GEOGRAPHIC AREA 1:", sheetData[0].geographic_area_1.split(","));
-    // console.log("GEOGRAPHIC AREA 1:", sheetData[0].geographic_area_2.split(","));
-    // console.log("MAIN OBJECTIVES:", sheetData[0].main_objectives.split(","));
-    // console.log("TOOL 1:", sheetData[0].tool_1.split(","));
-    // console.log("TOOL 2:", sheetData[0].tool_2.split(","));
-    // console.log("TOOL 3:", sheetData[0].tool_3.split(","));
-}
-
-oReq.send();
+    return data;
+  })
+  .then(function(result) {
+    addInfoFromData(result);
+  })
+  .catch(function() {
+    // An error occurred
+  });
 
 function getDataFromSheet(sheetData) {
   let processedData = [];
