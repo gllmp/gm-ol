@@ -26,6 +26,7 @@ html, body {
   min-width: 200px;
   height: -webkit-fill-available;
   /* height: calc(100% - 2em); */
+  resize: horizontal;
   padding: 1em;
   border-right: 1px solid #000;
   overflow: auto;
