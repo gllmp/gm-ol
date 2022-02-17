@@ -1,11 +1,18 @@
 import 'ol/ol.css';
 import './assets/css/style.css';
+import * as ol from 'ol';
+import Feature from 'ol/Feature';
 import Map from 'ol/Map';
 import Overlay from 'ol/Overlay';
+import Point from 'ol/geom/Point';
+import TileJSON from 'ol/source/TileJSON';
+import {Vector as VectorLayer} from 'ol/layer';
+import VectorSource from 'ol/source/Vector';
+import {Icon, Style} from 'ol/style';
 import TileLayer from 'ol/layer/Tile';
 import View from 'ol/View';
 import XYZ from 'ol/source/XYZ';
-import {toLonLat} from 'ol/proj';
+import {toLonLat, fromLonLat} from 'ol/proj';
 import {toStringHDMS} from 'ol/coordinate';
 
 /* DATA */
@@ -132,7 +139,7 @@ function createInfoMarkup(info, data, isLink = false) {
   let missionInfoDataElement;
   if (isLink) {
     missionInfoDataElement = document.createElement("a");
-  missionInfoDataElement.href = "#";
+    missionInfoDataElement.href = "#";
   } else {
     missionInfoDataElement = document.createElement("p");
   }
@@ -146,18 +153,48 @@ function createInfoMarkup(info, data, isLink = false) {
 
 /* MAP */
 
+/* Icon */
+
+const iconFeature = new Feature({
+  geometry: new Point([-3.7, 36.0]),
+  //geometry: new Point(fromLonLat([-3.7, 36.0])),
+  name: 'Null Island',
+  population: 4000,
+  rainfall: 500,
+});
+
+
+const iconStyle = new Style({
+  image: new Icon({
+    anchor: [0.5, 46],
+    anchorXUnits: 'fraction',
+    anchorYUnits: 'pixels',
+    src: './assets/img/icon.png',
+  }),
+});
+
+iconFeature.setStyle(iconStyle);
+
+const vectorSource = new VectorSource({
+  features: [iconFeature],
+});
+
+const vectorLayer = new VectorLayer({
+  source: vectorSource,
+});
+
 /**
  * Elements that make up the popup.
  */
-const container = document.getElementById('popup');
-const content = document.getElementById('popup-content');
-const closer = document.getElementById('popup-closer');
+const popUpContainer = document.getElementById('popup');
+const popUpContent = document.getElementById('popup-content');
+const popUpCloser = document.getElementById('popup-closer');
 
 /**
  * Create an overlay to anchor the popup to the map.
  */
 const overlay = new Overlay({
-  element: container,
+  element: popUpContainer,
   autoPan: {
     animation: {
       duration: 250,
@@ -169,9 +206,9 @@ const overlay = new Overlay({
  * Add a click handler to hide the popup.
  * @return {boolean} Don't follow the href.
  */
-closer.onclick = function () {
+ popUpCloser.onclick = function () {
   overlay.setPosition(undefined);
-  closer.blur();
+  popUpCloser.blur();
   return false;
 };
 
@@ -222,6 +259,6 @@ map.on('singleclick', function (evt) {
   const coordinate = evt.coordinate;
   const hdms = toStringHDMS(toLonLat(coordinate));
 
-  content.innerHTML = '<p>You clicked here:</p><code>' + hdms + '</code>';
+  popUpContent.innerHTML = '<p>You clicked here:</p><code>' + hdms + '</code>';
   overlay.setPosition(coordinate);
 });
