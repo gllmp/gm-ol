@@ -70,6 +70,11 @@ ajaxRequest(url)
   })
   .then(function(result) {
     addInfoFromData(result);
+
+    return result;
+  })
+  .then(function(result) {
+    addPointsFromData(result);
   })
   .catch(function() {
     // An error occurred
@@ -262,3 +267,37 @@ map.on('singleclick', function (evt) {
   popUpContent.innerHTML = '<p>You clicked here:</p><code>' + hdms + '</code>';
   overlay.setPosition(coordinate);
 });
+
+
+// add marker on click
+// map.on('singleclick', function (evt) {
+//   const coordinate = evt.coordinate;
+//   //console.log(coordinate);
+//   //console.log(ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326'));
+//   addMarker(coordinate);
+// });
+
+function addMarker(coordinates) {
+  let marker = new ol.Feature(new Point(coordinates));
+  marker.setStyle(iconStyle);
+  vectorSource.addFeature(marker);
+}
+
+// Add mission points on map
+
+function addPointsFromData(_data) {
+  _data.forEach(element => {
+    let coords = [];
+    let coordsStr = element.geographic_area_1;
+    
+    if ((coordsStr != "") && (coordsStr != "test") && (coordsStr != "NoData") && (coordsStr != "No Data")) {
+      let lon = parseFloat(coordsStr.split("Longitude ").pop().split("_")[0]);
+      let lat = parseFloat(coordsStr.split("Latitude ").pop());
+
+      coords.push(lon, lat);
+
+      addMarker(coords);
+    }
+
+  });
+}
