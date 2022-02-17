@@ -183,23 +183,37 @@ const attributions =
 /**
  * Create the map.
  */
-const map = new Map({
-  layers: [
-    new TileLayer({
-      source: new XYZ({
-        attributions: attributions,
-        url: 'https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=' + key,
-        tileSize: 512,
-      }),
-    }),
-  ],
-  overlays: [overlay],
-  target: 'map',
-  view: new View({
-    center: [0, 0],
-    zoom: 2,
+ const rasterLayer = new TileLayer({
+  source: new TileJSON({
+    url: 'https://a.tiles.mapbox.com/v3/aj.1x1-degrees.json?secure=1',
+    crossOrigin: '',
   }),
 });
+
+const mapTiler = new TileLayer({
+  source: new XYZ({
+    attributions: attributions,
+    url: 'https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=' + key,
+    tileSize: 512,
+  }),
+});
+
+// Spherical Mercator: EPSG:3857
+// Lon/Lat coordinates: EPSG:4326
+const view = new View({
+  center: [0, 0],
+  zoom: 2,
+  projection: "EPSG:4326"
+})
+
+const map = new Map({
+  layers: [mapTiler, vectorLayer],
+  overlays: [overlay],
+  target: 'map',
+  view: view
+});
+
+console.log("MAP: ", map);
 
 /**
  * Add a click handler to the map to render the popup.
