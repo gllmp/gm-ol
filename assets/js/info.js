@@ -23,7 +23,7 @@ class Info {
           missionContainerElement.appendChild(datesElement);
         });
     }
-      
+    
     createInfoMarkup(info, data, isLink = false) {
         let missionInfoElement = document.createElement("div");
         missionInfoElement.classList.add("mission-info");

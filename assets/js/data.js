@@ -46,14 +46,14 @@ class Data {
             const vals = Object.keys(element).map(key => element[key]);
             
             for (let i=0; i<keys.length; i++) {
-            let val = vals[i].split(", ")[1];
-    
-            if ((val != "") && (val != "test") && (val != "NoData")) {
-                let tempKeyVal = {};
-                tempKeyVal[keys[i]] = val;
-    
-                Object.assign(obj, tempKeyVal);
-            }  
+                let val = vals[i].split(", ")[1];
+        
+                if ((val != "") && (val != "test") && (val != "NoData")) {
+                    let tempKeyVal = {};
+                    tempKeyVal[keys[i]] = val;
+        
+                    Object.assign(obj, tempKeyVal);
+                }  
             }
     
             processedData.push(obj);
