@@ -24,6 +24,7 @@ html, body {
 #info {
   width: 25%;
   min-width: 200px;
+  max-width: 25%;
   height: -webkit-fill-available;
   /* height: calc(100% - 2em); */
   resize: horizontal;
