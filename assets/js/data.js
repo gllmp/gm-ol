@@ -37,29 +37,29 @@ class Data {
         let processedData = [];
     
         sheetData.forEach(element => {
-        let obj = {};
-    
-        let name = element.cruise_name.split(", ")[1];
-    
-        if ((name != "") && (name != "test") && (name != "NoData")) {
-            const keys = Object.keys(element);
-            const vals = Object.keys(element).map(key => element[key]);
+            let obj = {};
+        
+            let name = element.cruise_name.split(", ")[1];
+        
+            if ((name != "") && (name != "test") && (name != "NoData") && (name != "No Data")) {
+                const keys = Object.keys(element);
+                const vals = Object.keys(element).map(key => element[key]);
+                
+                for (let i=0; i<keys.length; i++) {
+                    let val = vals[i].split(", ")[1];
             
-            for (let i=0; i<keys.length; i++) {
-                let val = vals[i].split(", ")[1];
-        
-                if ((val != "") && (val != "test") && (val != "NoData")) {
-                    let tempKeyVal = {};
-                    tempKeyVal[keys[i]] = val;
-        
-                    Object.assign(obj, tempKeyVal);
-                }  
+                    if ((val != "") && (val != "test") && (val != "NoData") && (val != "No Data")) {
+                        let tempKeyVal = {};
+                        tempKeyVal[keys[i]] = val;
+                        
+                        Object.assign(obj, tempKeyVal);
+                    }  
+                }
+                
+                processedData.push(obj);
             }
-    
-            processedData.push(obj);
-        }
         });
-    
+        
         return processedData;
     }
 }
