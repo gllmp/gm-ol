@@ -62,6 +62,50 @@ class Data {
         
         return processedData;
     }
+    
+    parseDataByLevels(sheetData) {
+        let levelsData = [];
+        let levelMax = 1;
+        
+        sheetData.forEach(element => {
+            // get level max
+            let vals = Object.values(element);
+            
+            for (let i=0; i<vals.length; i++) {
+                let lvl = parseInt(vals[i].split(",")[0]);
+
+                levelMax = levelMax < lvl ? lvl : levelMax;
+            }
+
+            // add mission's names as keys
+            let name = element.cruise_name.split(", ")[1];
+
+            if ((name != "") && (name != "test") && (name != "NoData") && (name != "No Data")) {
+                levelsData[name] = [];
+
+                // add levels as mission's keys
+                for (let i=0; i<levelMax; i++) {
+                    levelsData[name][i+1] = [];
+                }
+
+                // add keys based on level
+                const keys = Object.keys(element);
+                const vals = Object.values(element);
+
+                for (let i=0; i<keys.length; i++) {
+                    let lvl = vals[i].split(", ")[0];
+                    let val = vals[i].split(", ")[1];
+            
+                    if ((val != "") && (val != "test") && (val != "NoData") && (val != "No Data")) {
+                        levelsData[name][lvl].push(keys[i])
+                    }
+                }
+            }
+
+        });
+
+        return levelsData;
+    }
 }
 
 export default Data;

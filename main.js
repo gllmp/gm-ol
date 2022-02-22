@@ -12,6 +12,7 @@ let map = new Map();
 let dataClass = new Data();
 
 let data = [];
+let levels = [];
 
 let url = "./assets/data/Attributs_Visuel_Web.xlsx";
 
@@ -40,6 +41,9 @@ dataClass.ajaxRequest(url)
 
     data = dataClass.getDataFromSheet(sheetData);
     console.log("DATA: ", data);
+
+    levels = dataClass.parseDataByLevels(sheetData);
+    console.log("LEVELS: ", levels);
 
     return data;
   })
