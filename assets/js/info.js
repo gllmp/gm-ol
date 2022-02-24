@@ -4,23 +4,33 @@ class Info {
         
     }
     
-    addInfoFromData(_data) {
-        _data.forEach(element => {
+    addInfoFromData(_data, _levels) {
+        _data.forEach((element, index) => {          
+          // create mission-container element
           let missionContainerElement = document.createElement("div");
           missionContainerElement.classList.add("mission-container");
           document.querySelector("#info").appendChild(missionContainerElement);
-        
-          let cruiseNameElement = this.createInfoMarkup("cruise_name", element.cruise_name, true);
-          missionContainerElement.appendChild(cruiseNameElement);
-      
-          let vesselElement = this.createInfoMarkup("vessel", element.vessel);
-          missionContainerElement.appendChild(vesselElement);
-      
-          let coChiefsElement = this.createInfoMarkup("co_chiefs", element.co_chiefs);
-          missionContainerElement.appendChild(coChiefsElement);
-      
-          let datesElement = this.createInfoMarkup("dates", element.dates);
-          missionContainerElement.appendChild(datesElement);
+
+          // add mission level groups containers
+          let name = Object.keys(_levels)[index];
+          let levelMax = _levels[name].length - 1;
+
+          for (let i=1; i<=levelMax; i++) {
+            let missionLevelGroupElement = document.createElement("div");
+            missionLevelGroupElement.classList.add("mission-level-group");
+            missionLevelGroupElement.classList.add("level-" + (i));
+            
+            missionContainerElement.appendChild(missionLevelGroupElement);
+
+            // add mission info elements based on their level
+            let currentLevelInfo = _levels[name][i];
+            
+            currentLevelInfo.forEach(info => {
+              let missionInfoElement = this.createInfoMarkup(info, element[info]);
+
+              missionLevelGroupElement.appendChild(missionInfoElement);
+            });
+          }          
         });
     }
     

@@ -46,6 +46,11 @@ html, body {
   margin-bottom: 1em;
 }
 
+.mission-level-group:not(:last-child) {
+  border-bottom: 1px dashed #000;
+  margin-bottom: 1em;
+}
+
 .mission-info {
   margin-bottom: 2em;
 }
