@@ -27,7 +27,7 @@ html, body {
   max-width: 25%;
   height: -webkit-fill-available;
   /* height: calc(100% - 2em); */
-  resize: horizontal;
+  /* resize: horizontal; */
   padding: 1em;
   border-right: 1px solid #000;
   overflow: auto;
