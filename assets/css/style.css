@@ -24,10 +24,10 @@ html, body {
 #info {
   width: 25%;
   min-width: 200px;
-  max-width: 25%;
+  max-width: 30%;
   height: -webkit-fill-available;
   /* height: calc(100% - 2em); */
-  /* resize: horizontal; */
+  resize: horizontal;
   padding: 1em;
   border-right: 1px solid #000;
   overflow: auto;
