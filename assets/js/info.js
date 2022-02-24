@@ -57,6 +57,16 @@ class Info {
       
         return missionInfoElement;
     }
+
+    showLevelInfo(level) {
+      let missionInfoElements = document.getElementsByClassName("mission-level-group");
+
+      for (let element of missionInfoElements) {
+        if (element.classList.contains("level-" + level)) {
+          element.style.display = "block";
+        }
+      }
+    }
 }
 
 export default Info;

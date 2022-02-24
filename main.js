@@ -49,6 +49,8 @@ dataClass.ajaxRequest(url)
   })
   .then(function(result) {
     info.addInfoFromData(result, levels);
+    
+    info.showLevelInfo(1);
 
     return result;
   })
