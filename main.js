@@ -60,3 +60,12 @@ dataClass.ajaxRequest(url)
   .catch(function() {
     // An error occurred
   });
+
+  // Update map size after info panel resize
+  let infoPanelElement = document.getElementById("info");
+  
+  let resizeObserver = new ResizeObserver(() => {
+    map.map.updateSize();
+  });
+
+  resizeObserver.observe(infoPanelElement);
