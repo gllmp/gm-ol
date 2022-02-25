@@ -34,13 +34,13 @@ class Info {
         });
     }
     
-    createInfoMarkup(info, data, isLink = false) {
+    createInfoMarkup(_info, _data, isLink = false) {
         let missionInfoElement = document.createElement("div");
         missionInfoElement.classList.add("mission-info");
       
         let missionInfoTitleElement = document.createElement("h3");
         missionInfoTitleElement.classList.add("mission-info-title");
-        missionInfoTitleElement.innerHTML = info;
+        missionInfoTitleElement.innerHTML = _info.replaceAll("_",  " ").toUpperCase();
         missionInfoElement.appendChild(missionInfoTitleElement);
       
         let missionInfoDataElement;
@@ -51,8 +51,8 @@ class Info {
           missionInfoDataElement = document.createElement("p");
         }
         missionInfoDataElement.classList.add("mission-info-data");
-        missionInfoDataElement.classList.add("mission-" + info);
-        missionInfoDataElement.innerHTML = data;
+        missionInfoDataElement.classList.add("mission-" + _info);
+        missionInfoDataElement.innerHTML = _data;
         missionInfoElement.appendChild(missionInfoDataElement);
       
         return missionInfoElement;
