@@ -130,7 +130,6 @@ class OpenLayerMap {
             _this.overlay.setPosition(coordinate);
         });
         
-        
         // add marker on click
         // this.map.on('singleclick', function (evt) {
         //   const coordinate = evt.coordinate;

@@ -14,6 +14,8 @@ let dataClass = new Data();
 let data = [];
 let levels = [];
 
+let currentLevel = 1;
+
 let url = "./assets/data/Attributs_Visuel_Web.xlsx";
 
 dataClass.ajaxRequest(url)
@@ -69,3 +71,18 @@ dataClass.ajaxRequest(url)
   });
 
   resizeObserver.observe(infoPanelElement);
+
+  // On mission selected
+  const missionSelectedEvent = new Event('mission-selected');
+
+  document.addEventListener("mission-selected", onMissionSelected);
+
+  function onMissionSelected(event) {
+    // Set level
+    currentLevel = 2;
+
+    // Show new level infos
+    let mission = event.detail;
+    
+    info.showLevelInfo(currentLevel, mission);
+  }
