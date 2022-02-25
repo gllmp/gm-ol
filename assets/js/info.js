@@ -25,8 +25,9 @@ class Info {
             // add mission info elements based on their level
             let currentLevelInfo = _levels[name][i];
             
-            currentLevelInfo.forEach(info => {
-              let missionInfoElement = this.createInfoMarkup(info, element[info]);
+            currentLevelInfo.forEach((info, order) => {
+              
+              let missionInfoElement = this.createInfoMarkup(info, element[info], order == 0 ? true : false);
 
               missionLevelGroupElement.appendChild(missionInfoElement);
             });
