@@ -52,7 +52,7 @@ dataClass.ajaxRequest(url)
   .then(function(result) {
     info.addInfoFromData(result, levels);
     
-    info.toggleLevelInfo(1);
+    info.showLevelInfo(1);
 
     return result;
   })
@@ -85,5 +85,5 @@ dataClass.ajaxRequest(url)
     // Show new level infos
     let mission = event.detail;
     
-    info.toggleLevelInfo(currentLevel, mission);
+    info.showLevelInfo(currentLevel, mission);
   }

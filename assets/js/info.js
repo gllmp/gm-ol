@@ -74,19 +74,19 @@ class Info {
         return missionInfoElement;
     }
 
-    toggleLevelInfo(level, mission = "") {
+    showLevelInfo(level, mission = "") {
       if (mission != "") {
         // if mission name is specified
         let missionContainerElements = document.getElementsByClassName("mission-container");
         
         for (let element of missionContainerElements) {
+          // show selected mission infos
           if (element.getAttribute("data-mission") == mission) {
             let levelElement = element.getElementsByClassName("level-" + level)[0];
-            if (levelElement.style.display != "block") {
-              levelElement.style.display = "block";
-            } else {
-              levelElement.style.display = "none";
-            }
+            levelElement.style.display = "block";
+          } else {
+            // hide all others missions infos
+            element.classList.add("hidden");
           }
         }
       } else {
@@ -94,14 +94,11 @@ class Info {
         let missionInfoElements = document.getElementsByClassName("mission-level-group");
 
         for (let element of missionInfoElements) {
+          // show selected level infos
           if (element.classList.contains("level-" + level)) {
-            if (element.style.display != "block") {
-              element.style.display = "block";
-            } else {
-              element.style.display = "none";
-            }
+            element.style.display = "block";
           }
-        }  
+        }
       }
     }
 
