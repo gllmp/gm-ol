@@ -60,7 +60,7 @@ class Info {
           if (isMission) {
             missionInfoDataElement.addEventListener("click", this.onMissionSelected.bind(this));
           } else {
-            
+
           }
         } else {
           missionInfoDataElement = document.createElement("p");
@@ -74,7 +74,7 @@ class Info {
         return missionInfoElement;
     }
 
-    showLevelInfo(level, mission = "") {
+    toggleLevelInfo(level, mission = "") {
       if (mission != "") {
         // if mission name is specified
         let missionContainerElements = document.getElementsByClassName("mission-container");
@@ -82,7 +82,11 @@ class Info {
         for (let element of missionContainerElements) {
           if (element.getAttribute("data-mission") == mission) {
             let levelElement = element.getElementsByClassName("level-" + level)[0];
-            levelElement.style.display = "block";
+            if (levelElement.style.display != "block") {
+              levelElement.style.display = "block";
+            } else {
+              levelElement.style.display = "none";
+            }
           }
         }
       } else {
@@ -91,19 +95,22 @@ class Info {
 
         for (let element of missionInfoElements) {
           if (element.classList.contains("level-" + level)) {
-            element.style.display = "block";
+            if (element.style.display != "block") {
+              element.style.display = "block";
+            } else {
+              element.style.display = "none";
+            }
           }
         }  
       }
     }
 
-
     onMissionSelected(event) {
       let mission = event.target.getAttribute("data-mission");
       
       let customEvent = new CustomEvent('mission-selected', {'detail': mission});
+
       document.dispatchEvent(customEvent);
-    }
-}
+    }}
 
 export default Info;
