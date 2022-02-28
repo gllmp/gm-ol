@@ -145,11 +145,13 @@ class OpenLayerMap {
             });
 
             if (feature) {
-                let popupCoordinates = feature.getGeometry().getCoordinates();
-                popupCoordinates[1] = popupCoordinates[1] + 1700000;
-                _this.popup.setPosition(popupCoordinates);
-                
-                _this.popUpContent.innerHTML = feature.get("mission");
+                if (feature.get("type") == "mission") {
+                    let mission = feature.get("mission");
+      
+                    let customEvent = new CustomEvent('mission-selected-map', {'detail': {mission, feature}});
+              
+                    document.dispatchEvent(customEvent);
+                }
 
                 // _this.popUpContainer.popover({
                 //     placement: 'top',
@@ -177,9 +179,10 @@ class OpenLayerMap {
         });
     }
     
-    addMarker(coordinates, mission = "") {
+    addMarker(coordinates, type = "", mission = "") {
         let marker = new ol.Feature({
             geometry: new Point(coordinates),
+            type: type,
             mission: mission
         });
         marker.setStyle(this.iconStyle);
@@ -201,9 +204,18 @@ class OpenLayerMap {
         
                 coords.push(lon, lat);
         
-                this.addMarker(fromLonLat(coords), mission);
+                this.addMarker(fromLonLat(coords), "mission", mission);
             }
         });
+    }
+
+    showPopupInfo(feature) {
+        let popupCoordinates = feature.getGeometry().getCoordinates();
+        popupCoordinates[1] = popupCoordinates[1] + 1700000;
+        
+        this.popup.setPosition(popupCoordinates);
+
+        this.popUpContent.innerHTML = feature.get("mission");
     }
     
 }

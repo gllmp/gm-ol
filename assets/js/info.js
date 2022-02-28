@@ -82,6 +82,8 @@ class Info {
         for (let element of missionContainerElements) {
           // show selected mission infos
           if (element.getAttribute("data-mission") == mission) {
+            element.classList.remove("hidden");
+
             element.classList.add("selected");
 
             let levelElement = element.getElementsByClassName("level-" + level)[0];
@@ -107,7 +109,7 @@ class Info {
     onMissionSelected(event) {
       let mission = event.target.getAttribute("data-mission");
       
-      let customEvent = new CustomEvent('mission-selected', {'detail': mission});
+      let customEvent = new CustomEvent('mission-selected-info', {'detail': mission});
 
       document.dispatchEvent(customEvent);
     }}
