@@ -27,8 +27,10 @@ class Info {
             let currentLevelInfo = _levels[name][i];
             
             currentLevelInfo.forEach((info, order) => {
+              let isLink = (order == 0 && i == 1) || info.includes("tool") ? true : false;
+              let isMission = (order == 0 && i == 1) ? true : false;
 
-              let missionInfoElement = this.createInfoMarkup(info, element[info], (order == 0 && i == 1) || info.includes("tool") ? true : false);
+              let missionInfoElement = this.createInfoMarkup(info, element[info], isLink, isMission);
               
               missionLevelGroupElement.appendChild(missionInfoElement);
             });
@@ -36,7 +38,7 @@ class Info {
         });
     }
     
-    createInfoMarkup(_info, _data, isLink = false) {
+    createInfoMarkup(_info, _data, isLink = false, isMission = false) {
         // Element
         let missionInfoElement = document.createElement("div");
         missionInfoElement.classList.add("mission-info");
@@ -55,7 +57,11 @@ class Info {
 
           missionInfoDataElement.setAttribute('data-mission', _data);
           
-          missionInfoDataElement.addEventListener("click", this.onMissionSelected.bind(this));
+          if (isMission) {
+            missionInfoDataElement.addEventListener("click", this.onMissionSelected.bind(this));
+          } else {
+            
+          }
         } else {
           missionInfoDataElement = document.createElement("p");
         }
@@ -70,6 +76,7 @@ class Info {
 
     showLevelInfo(level, mission = "") {
       if (mission != "") {
+        // if mission name is specified
         let missionContainerElements = document.getElementsByClassName("mission-container");
         
         for (let element of missionContainerElements) {
@@ -79,6 +86,7 @@ class Info {
           }
         }
       } else {
+        // if level only is specified
         let missionInfoElements = document.getElementsByClassName("mission-level-group");
 
         for (let element of missionInfoElements) {
