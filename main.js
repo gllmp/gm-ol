@@ -59,8 +59,9 @@ dataClass.ajaxRequest(url)
   .then(function(result) {
     map.addPointsFromData(result);
   })
-  .catch(function() {
+  .catch(function(error) {
     // An error occurred
+    console.log("ERROR: ", error);
   });
 
   // Update map size after info panel resize
