@@ -41,6 +41,14 @@ html, body {
   border-bottom: 1px solid #000;
 }
 
+.selected {
+  display: block;
+}
+
+.hidden {
+  display: none;
+}
+
 .mission-container {
   border-bottom: 1px solid #000;
   margin-bottom: 1em;
@@ -57,12 +65,18 @@ html, body {
 
 .mission-info {
   margin-bottom: 2em;
+  padding: 0.5em;
 }
 
 .mission-info-title {
   margin: 0;
   margin-bottom: 0.5em;
   font-size: 14px;
+}
+
+/* mission title */
+.selected .mission-level-group:first-child .mission-info:first-child {
+  background-color: #ff0;
 }
 
 .mission-info-data {

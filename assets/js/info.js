@@ -82,6 +82,8 @@ class Info {
         for (let element of missionContainerElements) {
           // show selected mission infos
           if (element.getAttribute("data-mission") == mission) {
+            element.classList.add("selected");
+
             let levelElement = element.getElementsByClassName("level-" + level)[0];
             levelElement.style.display = "block";
           } else {
