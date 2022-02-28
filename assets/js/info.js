@@ -53,8 +53,6 @@ class Info {
           missionInfoDataElement = document.createElement("a");
           missionInfoDataElement.href = "#";
 
-          missionInfoDataElement.classList.add('data-mission-link');
-
           missionInfoDataElement.setAttribute('data-mission', _data);
           
           missionInfoDataElement.addEventListener("click", this.onMissionSelected.bind(this));
@@ -62,6 +60,7 @@ class Info {
           missionInfoDataElement = document.createElement("p");
         }
         missionInfoDataElement.classList.add("mission-info-data");
+        missionInfoDataElement.classList.add('mission-info-link');
         missionInfoDataElement.classList.add("mission-" + _info);
         missionInfoDataElement.innerHTML = _data;
         missionInfoElement.appendChild(missionInfoDataElement);
