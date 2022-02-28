@@ -24,18 +24,18 @@ class OpenLayerMap {
         this.iconFeature = new Feature({
             geometry: new Point([-3.7, 36.0]),
             //geometry: new Point(fromLonLat([-3.7, 36.0])),
-            name: 'Null Island',
-            population: 4000,
-            rainfall: 500,
+            // name: 'Null Island',
+            // population: 4000,
+            // rainfall: 500,
         });
         
         
         this.iconStyle = new Style({
             image: new Icon({
-            anchor: [0.5, 46],
-            anchorXUnits: 'fraction',
-            anchorYUnits: 'pixels',
-            src: './assets/img/icon.png',
+                anchor: [0.5, 46],
+                anchorXUnits: 'fraction',
+                anchorYUnits: 'pixels',
+                src: './assets/img/icon.png',
             }),
         });
         
@@ -60,12 +60,12 @@ class OpenLayerMap {
         /**
          * Create an overlay to anchor the popup to the map.
          */
-        this.overlay = new Overlay({
+        this.popup = new Overlay({
             element: this.popUpContainer,
             autoPan: {
-            animation: {
-                duration: 250,
-            },
+                animation: {
+                    duration: 250,
+                },
             },
         });
         
@@ -74,7 +74,7 @@ class OpenLayerMap {
          * @return {boolean} Don't follow the href.
          */
          this.popUpCloser.onclick = function () {
-            _this.overlay.setPosition(undefined);
+            _this.popup.setPosition(undefined);
             _this.popUpCloser.blur();
             return false;
         };
@@ -112,7 +112,7 @@ class OpenLayerMap {
         
         this.map = new Map({
             layers: [this.mapTiler, this.vectorLayer],
-            overlays: [this.overlay],
+            overlays: [this.popup],
             target: 'map',
             view: this.view
         });
@@ -122,13 +122,13 @@ class OpenLayerMap {
         /**
          * Add a click handler to the map to render the popup.
          */
-         this.map.on('singleclick', function (evt) {
-            const coordinate = evt.coordinate;
-            const hdms = toStringHDMS(toLonLat(coordinate));
+        //  this.map.on('singleclick', function (evt) {
+        //     const coordinate = evt.coordinate;
+        //     const hdms = toStringHDMS(toLonLat(coordinate));
         
-            _this.popUpContent.innerHTML = '<p>You clicked here:</p><code>' + hdms + '</code>';
-            _this.overlay.setPosition(coordinate);
-        });
+        //     _this.popUpContent.innerHTML = '<p>You clicked here:</p><code>' + hdms + '</code>';
+        //     _this.overlay.setPosition(coordinate);
+        // });
         
         // add marker on click
         // this.map.on('singleclick', function (evt) {
@@ -138,31 +138,74 @@ class OpenLayerMap {
         //   _this.addMarker(coordinate);
         // });
 
+        // display popup on click
+        this.map.on('click', function (evt) {
+            const feature = _this.map.forEachFeatureAtPixel(evt.pixel, function (feature) {
+                return feature;
+            });
+
+            if (feature) {
+                let popupCoordinates = feature.getGeometry().getCoordinates();
+                popupCoordinates[1] = popupCoordinates[1] + 1700000;
+                _this.popup.setPosition(popupCoordinates);
+                
+                _this.popUpContent.innerHTML = feature.get("mission");
+
+                // _this.popUpContainer.popover({
+                //     placement: 'top',
+                //     html: true,
+                //     content: feature.get('name'),
+                // });
+                // _this.popUpContainer.popover('show');
+            } else {
+                //_this.popUpContainer.popover('dispose');
+            }
+        });
+        
+        // change mouse cursor when over marker
+        _this.map.on('pointermove', function (e) {
+            const pixel = _this.map.getEventPixel(e.originalEvent);
+            const hit = _this.map.hasFeatureAtPixel(pixel);
+
+            let targetElement = document.getElementById(_this.map.getTarget());
+            targetElement.style.cursor = hit ? 'pointer' : '';
+        });
+
+        // Close the popup when the map is moved
+        _this.map.on('movestart', function () {
+            //_this.popUpContainer.popover('dispose');
+        });
     }
     
-    addMarker(coordinates) {
-        let marker = new ol.Feature(new Point(coordinates));
+    addMarker(coordinates, mission = "") {
+        let marker = new ol.Feature({
+            geometry: new Point(coordinates),
+            mission: mission
+        });
         marker.setStyle(this.iconStyle);
+
         this.vectorSource.addFeature(marker);
     }
     
     // Add mission points on map
     addPointsFromData(_data) {
         _data.forEach(element => {
-        let coords = [];
-        let coordsStr = element.geographic_area_1;
+            let coords = [];
+            let coordsStr = element.geographic_area_1;
 
-        if ((coordsStr != "") && (coordsStr != undefined) && (coordsStr != "test") && (coordsStr != "NoData") && (coordsStr != "No Data")) {
-            let lon = parseFloat(coordsStr.split("Longitude ").pop().split("_")[0]);
-            let lat = parseFloat(coordsStr.split("Latitude ").pop());
-    
-            coords.push(lon, lat);
-    
-            this.addMarker(fromLonLat(coords));
-        }
-    
+            let mission = element[Object.keys(element)[0]];
+
+            if ((coordsStr != "") && (coordsStr != undefined) && (coordsStr != "test") && (coordsStr != "NoData") && (coordsStr != "No Data")) {
+                let lon = parseFloat(coordsStr.split("Longitude ").pop().split("_")[0]);
+                let lat = parseFloat(coordsStr.split("Latitude ").pop());
+        
+                coords.push(lon, lat);
+        
+                this.addMarker(fromLonLat(coords), mission);
+            }
         });
     }
+    
 }
 
 export default OpenLayerMap;
