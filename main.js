@@ -74,7 +74,7 @@ dataClass.ajaxRequest(url)
   resizeObserver.observe(infoPanelElement);
 
   // On mission selected
-  const missionSelectedEvent = new Event('mission-selected');
+  const missionSelectedEvent = new CustomEvent('mission-selected');
 
   document.addEventListener("mission-selected", onMissionSelected);
 
