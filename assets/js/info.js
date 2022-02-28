@@ -27,8 +27,8 @@ class Info {
             let currentLevelInfo = _levels[name][i];
             
             currentLevelInfo.forEach((info, order) => {
-              
-              let missionInfoElement = this.createInfoMarkup(info, element[info], order == 0 ? true : false);
+
+              let missionInfoElement = this.createInfoMarkup(info, element[info], (order == 0 && i == 1) || info.includes("tool") ? true : false);
               
               missionLevelGroupElement.appendChild(missionInfoElement);
             });
@@ -52,6 +52,8 @@ class Info {
         if (isLink) {
           missionInfoDataElement = document.createElement("a");
           missionInfoDataElement.href = "#";
+
+          missionInfoDataElement.classList.add('data-mission-link');
 
           missionInfoDataElement.setAttribute('data-mission', _data);
           
