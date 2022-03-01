@@ -69,9 +69,17 @@ html, body {
 }
 
 .mission-info-title {
+  display: block;
   margin: 0;
   margin-bottom: 0.5em;
   font-size: 14px;
+  color: #000;
+}
+
+.mission-info-link {
+  display: block;
+  text-decoration: none;
+  color: #000;
 }
 
 /* mission title */

@@ -40,8 +40,26 @@ class Info {
     
     createInfoMarkup(_info, _data, isLink = false, isMission = false) {
         // Element
-        let missionInfoElement = document.createElement("div");
+        let missionInfoElement;
+        
+        if (isLink) {
+          missionInfoElement = document.createElement("a");
+          missionInfoElement.href = "#";
+
+          missionInfoElement.setAttribute('data-mission', _data);
+          
+          if (isMission) {
+            missionInfoElement.addEventListener("click", this.onMissionSelected.bind(this));
+          } else {
+
+          }
+
+        } else {
+          missionInfoElement = document.createElement("div");
+        }
+
         missionInfoElement.classList.add("mission-info");
+        missionInfoElement.classList.add('mission-info-link');
 
         // Title
         let missionInfoTitleElement = document.createElement("h3");
@@ -50,25 +68,13 @@ class Info {
         missionInfoElement.appendChild(missionInfoTitleElement);
 
         // Data
-        let missionInfoDataElement;
-        if (isLink) {
-          missionInfoDataElement = document.createElement("a");
-          missionInfoDataElement.href = "#";
-
-          missionInfoDataElement.setAttribute('data-mission', _data);
-          
-          if (isMission) {
-            missionInfoDataElement.addEventListener("click", this.onMissionSelected.bind(this));
-          } else {
-
-          }
-        } else {
-          missionInfoDataElement = document.createElement("p");
-        }
+        let missionInfoDataElement = document.createElement("p");
+    
         missionInfoDataElement.classList.add("mission-info-data");
-        missionInfoDataElement.classList.add('mission-info-link');
         missionInfoDataElement.classList.add("mission-" + _info);
+        
         missionInfoDataElement.innerHTML = _data;
+        
         missionInfoElement.appendChild(missionInfoDataElement);
       
         return missionInfoElement;
