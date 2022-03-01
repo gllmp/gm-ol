@@ -21,13 +21,13 @@ class OpenLayerMap {
         let _this = this;
 
         /* Icon */
-        this.iconFeature = new Feature({
-            geometry: new Point([-3.7, 36.0]),
-            //geometry: new Point(fromLonLat([-3.7, 36.0])),
-            // name: 'Null Island',
-            // population: 4000,
-            // rainfall: 500,
-        });
+        // this.iconFeature = new Feature({
+        //     geometry: new Point([-3.7, 36.0]),
+        //     //geometry: new Point(fromLonLat([-3.7, 36.0])),
+        //     // name: 'Null Island',
+        //     // population: 4000,
+        //     // rainfall: 500,
+        // });
         
         
         this.iconStyle = new Style({
@@ -39,7 +39,7 @@ class OpenLayerMap {
             }),
         });
         
-        this.iconFeature.setStyle(this.iconStyle);
+        //this.iconFeature.setStyle(this.iconStyle);
         
         this.vectorSource = new VectorSource({
             //features: [iconFeature],
