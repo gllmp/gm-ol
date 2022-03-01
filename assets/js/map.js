@@ -211,7 +211,6 @@ class OpenLayerMap {
 
     showPopupInfo(feature) {
         let popupCoordinates = feature.getGeometry().getCoordinates();
-        popupCoordinates[1] = popupCoordinates[1] + 1700000;
         
         this.popup.setPosition(popupCoordinates);
 
