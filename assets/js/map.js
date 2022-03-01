@@ -50,6 +50,8 @@ class OpenLayerMap {
             source: this.vectorSource,
         });
         
+        this.features;
+
         /**
          * Elements that make up the popup.
          */
@@ -209,6 +211,21 @@ class OpenLayerMap {
         });
     }
 
+    getFeatures() {
+        let source = this.vectorLayer.getSource();
+        let features = source.getFeatures();
+
+        return features;
+    }
+
+    showFeature(feature, style = this.iconStyle) {
+        feature.setStyle(style);
+    }
+
+    hideFeature(feature) {
+        feature.setStyle(new Style(null)); 
+    }
+
     showPopupInfo(feature) {
         let popupCoordinates = feature.getGeometry().getCoordinates();
         
@@ -216,7 +233,6 @@ class OpenLayerMap {
 
         this.popUpContent.innerHTML = feature.get("mission");
     }
-    
 }
 
 export default OpenLayerMap;
