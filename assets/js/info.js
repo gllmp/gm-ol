@@ -31,7 +31,7 @@ class Info {
               let isMission = (order == 0 && i == 1) ? true : false;
 
               let missionInfoElement = this.createInfoMarkup(info, element[info], isLink, isMission);
-              
+
               missionLevelGroupElement.appendChild(missionInfoElement);
             });
           }          
@@ -39,45 +39,47 @@ class Info {
     }
     
     createInfoMarkup(_info, _data, isLink = false, isMission = false) {
-        // Element
-        let missionInfoElement;
+      // Element
+      let missionInfoElement;
+
+      if (isLink) {
+        missionInfoElement = document.createElement("a");
+        missionInfoElement.href = "#";
+
+        missionInfoElement.setAttribute('data-mission', _data);
         
-        if (isLink) {
-          missionInfoElement = document.createElement("a");
-          missionInfoElement.href = "#";
-
-          missionInfoElement.setAttribute('data-mission', _data);
-          
-          if (isMission) {
-            missionInfoElement.addEventListener("click", this.onMissionSelected.bind(this));
-          } else {
-
-          }
-
+        if (isMission) {
+          missionInfoElement.addEventListener("click", this.onMissionSelected.bind(this));
         } else {
-          missionInfoElement = document.createElement("div");
+
         }
 
-        missionInfoElement.classList.add("mission-info");
-        missionInfoElement.classList.add('mission-info-link');
+      } else {
+        missionInfoElement = document.createElement("div");
+      }
 
-        // Title
-        let missionInfoTitleElement = document.createElement("h3");
-        missionInfoTitleElement.classList.add("mission-info-title");
-        missionInfoTitleElement.innerHTML = _info.replaceAll("_",  " ").toUpperCase();
-        missionInfoElement.appendChild(missionInfoTitleElement);
-
-        // Data
-        let missionInfoDataElement = document.createElement("p");
-    
-        missionInfoDataElement.classList.add("mission-info-data");
-        missionInfoDataElement.classList.add("mission-" + _info);
-        
-        missionInfoDataElement.innerHTML = _data;
-        
-        missionInfoElement.appendChild(missionInfoDataElement);
+      missionInfoElement.classList.add("mission-info");
+      missionInfoElement.classList.add('mission-info-link');
       
-        return missionInfoElement;
+      // Title
+      let missionInfoTitleElement = document.createElement("h3");
+      missionInfoTitleElement.classList.add("mission-info-title");
+      missionInfoTitleElement.innerHTML = _info.replaceAll("_",  " ").toUpperCase();
+      
+      missionInfoElement.appendChild(missionInfoTitleElement);
+
+      // Data
+      let missionInfoDataElement = document.createElement("p");
+
+      missionInfoDataElement.classList.add("mission-info-data");
+      missionInfoDataElement.classList.add("mission-" + _info);
+      
+      missionInfoDataElement.innerHTML = _data;
+      
+      missionInfoElement.appendChild(missionInfoDataElement);
+      
+      return missionInfoElement;
+
     }
 
     showLevelInfo(level, mission = "") {
@@ -113,7 +115,15 @@ class Info {
     }
 
     onMissionSelected(event) {
-      let mission = event.target.getAttribute("data-mission");
+      let mission;
+      let target;
+
+      if (event.target.className != "mission-info-link") {
+        target = event.target.parentElement;
+        mission = target.getAttribute("data-mission");
+      } else {
+        mission = event.target.getAttribute("data-mission");
+      }
       
       let customEvent = new CustomEvent('mission-selected', {'detail': {mission}});
 
