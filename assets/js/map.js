@@ -148,7 +148,7 @@ class OpenLayerMap {
                 if (feature.get("type") == "mission") {
                     let mission = feature.get("mission");
       
-                    let customEvent = new CustomEvent('mission-selected-map', {'detail': {mission, feature}});
+                    let customEvent = new CustomEvent('mission-selected', {'detail': {mission, feature}});
               
                     document.dispatchEvent(customEvent);
                 }

@@ -109,7 +109,7 @@ class Info {
     onMissionSelected(event) {
       let mission = event.target.getAttribute("data-mission");
       
-      let customEvent = new CustomEvent('mission-selected-info', {'detail': mission});
+      let customEvent = new CustomEvent('mission-selected', {'detail': {mission}});
 
       document.dispatchEvent(customEvent);
     }}

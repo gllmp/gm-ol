@@ -76,27 +76,20 @@ dataClass.ajaxRequest(url)
   // On mission selected
   const missionSelectedEvent = new CustomEvent('mission-selected');
 
-  document.addEventListener("mission-selected-info", onMissionSelectedFromInfo);
-  document.addEventListener("mission-selected-map", onMissionSelectedFromMap);
+  document.addEventListener("mission-selected", onMissionSelected);
 
-  function onMissionSelectedFromInfo(event) {
-    // Set level
-    currentLevel = 2;
-
-    // Show new level infos
-    let mission = event.detail;
-    info.showLevelInfo(currentLevel, mission);
-  }
-
-  function onMissionSelectedFromMap(event) {
+  function onMissionSelected(event) {
     // Set level
     currentLevel = 2;
 
     // Show new level infos
     let mission = event.detail.mission;
     info.showLevelInfo(currentLevel, mission);
+
+  function onMissionSelectedFromMap(event) {
+    // Set level
     
-    // Show infos in popup
-    let feature = event.detail.feature;
-    map.showPopupInfo(feature);
+    // // Show infos in popup
+    // let feature = event.detail.feature;
+    // map.showPopupInfo(feature);
   }
