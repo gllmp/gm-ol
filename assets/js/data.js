@@ -7,15 +7,15 @@ class Data {
     /* set up XMLHttpRequest */
     ajaxRequest(url) {
         return new Promise(function(resolve, reject) {
-        var xhr = new XMLHttpRequest();
-        xhr.onload = function() {
-            resolve(this.response);
-        };
-        xhr.onerror = reject;
-        xhr.open('GET', url);
-        xhr.responseType = "arraybuffer";
-        
-        xhr.send();
+            var xhr = new XMLHttpRequest();
+            xhr.onload = function() {
+                resolve(this.response);
+            };
+            xhr.onerror = reject;
+            xhr.open('GET', url);
+            xhr.responseType = "arraybuffer";
+            
+            xhr.send();
         });
     }
 

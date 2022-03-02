@@ -20,7 +20,7 @@ class OpenLayerMap {
     constructor() {
         let _this = this;
 
-        /* Icon */
+        // Icon
         // this.iconFeature = new Feature({
         //     geometry: new Point([-3.7, 36.0]),
         //     //geometry: new Point(fromLonLat([-3.7, 36.0])),
@@ -28,7 +28,6 @@ class OpenLayerMap {
         //     // population: 4000,
         //     // rainfall: 500,
         // });
-        
         
         this.iconStyle = new Style({
             image: new Icon({
@@ -52,16 +51,14 @@ class OpenLayerMap {
         
         this.features;
 
-        /**
-         * Elements that make up the popup.
-         */
+        // elements that make up the popup
+         
         this.popUpContainer = document.getElementById('popup');
         this.popUpContent = document.getElementById('popup-content');
         this.popUpCloser = document.getElementById('popup-closer');
         
-        /**
-         * Create an overlay to anchor the popup to the map.
-         */
+        // create an overlay to anchor the popup to the map
+        
         this.popup = new Overlay({
             element: this.popUpContainer,
             autoPan: {
@@ -71,10 +68,9 @@ class OpenLayerMap {
             },
         });
         
-        /**
-         * Add a click handler to hide the popup.
-         * @return {boolean} Don't follow the href.
-         */
+        // add a click handler to hide the popup
+        // @return {boolean} Don't follow the href
+         
          this.popUpCloser.onclick = function () {
             _this.popup.setPosition(undefined);
             _this.popUpCloser.blur();
@@ -86,9 +82,8 @@ class OpenLayerMap {
             '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> ' +
             '<a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>';
         
-        /**
-         * Create the map.
-         */
+        // create the map.
+        
         this.rasterLayer = new TileLayer({
             source: new TileJSON({
             url: 'https://a.tiles.mapbox.com/v3/aj.1x1-degrees.json?secure=1',
@@ -121,9 +116,8 @@ class OpenLayerMap {
         
         //console.log("MAP: ", map);
         
-        /**
-         * Add a click handler to the map to render the popup.
-         */
+        // add a click handler to the map to render the popup.
+         
         //  this.map.on('singleclick', function (evt) {
         //     const coordinate = evt.coordinate;
         //     const hdms = toStringHDMS(toLonLat(coordinate));

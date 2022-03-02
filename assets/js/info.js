@@ -5,7 +5,7 @@ class Info {
     }
     
     addInfoFromData(_data, _levels) {
-        _data.forEach((element, index) => {          
+        _data.forEach((element, index) => {             
           // create mission-container element
           let missionContainerElement = document.createElement("div");
           missionContainerElement.classList.add("mission-container");
@@ -39,7 +39,6 @@ class Info {
     }
     
     createInfoMarkup(_info, _data, isLink = false, isMission = false) {
-      // Element
       let missionInfoElement;
 
       if (isLink) {
