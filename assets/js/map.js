@@ -211,6 +211,28 @@ class OpenLayerMap {
         return features;
     }
 
+    getFeature(mission) {
+        let features = this.getFeatures();
+        let feature;
+
+        features.forEach(element => {
+            if (element.get("mission") == mission) {
+                feature = element;
+            }
+        });
+
+        return feature;
+    }
+
+    getFeatureCoordinates(mission) {
+        let coords = [];
+        let feature = this.getFeature(mission);
+        
+        coords = feature.getGeometry().getCoordinates();
+
+        return coords;
+    }
+
     showFeature(feature, style = this.iconStyle) {
         feature.setStyle(style);
     }
