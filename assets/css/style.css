@@ -41,6 +41,11 @@ html, body {
   border-bottom: 1px solid #000;
 }
 
+.page-title {
+  text-decoration: none;
+  color: #000;
+}
+
 .selected {
   display: block;
 }
