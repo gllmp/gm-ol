@@ -78,12 +78,15 @@ class Info {
       missionInfoElement.appendChild(missionInfoDataElement);
       
       return missionInfoElement;
-
     }
 
     showLevelInfo(level, mission = "") {
       if (mission != "") {
         // if mission name is specified
+        
+        // remove leading space
+        if (mission[0] == " ") mission = mission.substring(1);
+
         let missionContainerElements = document.getElementsByClassName("mission-container");
         
         for (let element of missionContainerElements) {
