@@ -120,9 +120,9 @@ class Info {
       let mission;
       let target;
 
-      if (event.target.className != "mission-info-link") {
+      if (!event.target.classList.contains("mission-info-link")) {
         target = event.target.parentElement;
-        mission = target.getAttribute("data-mission");
+        mission = target.getAttribute("data-mission");  
       } else {
         mission = event.target.getAttribute("data-mission");
       }
@@ -130,6 +130,8 @@ class Info {
       let customEvent = new CustomEvent('mission-selected', {'detail': {mission}});
 
       document.dispatchEvent(customEvent);
-    }}
+    }
+  }
+
 
 export default Info;
