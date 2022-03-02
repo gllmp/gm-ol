@@ -15,6 +15,7 @@ import View from 'ol/View';
 import XYZ from 'ol/source/XYZ';
 import {toLonLat, fromLonLat} from 'ol/proj';
 import {toStringHDMS} from 'ol/coordinate';
+import * as Easing from 'ol/easing';
 
 class OpenLayerMap {
     constructor() {
@@ -249,7 +250,6 @@ class OpenLayerMap {
         if (feature != undefined) {
             // hide others features
             features.forEach(element => {
-
                 if (element.get("mission") != mission) {
                     this.hideFeature(element);
                 }
@@ -260,9 +260,13 @@ class OpenLayerMap {
                 {
                     zoom: 6,
                     center: this.getFeatureCoordinates(mission),
+                    duration: 1000,
+                    easing: Easing.easeOut
                 },
                 function (result) {
+                    // animation end
                     console.log("ANIMATION END: ", result);
+                    
                 }
             );
     
