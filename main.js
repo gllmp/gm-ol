@@ -84,11 +84,12 @@ dataClass.ajaxRequest(url)
 
     // Show new level infos
     let mission = event.detail.mission;
+
     info.showLevelInfo(currentLevel, mission);
 
-  function onMissionSelectedFromMap(event) {
-    // Set level
-    
+    // Select feature on map
+    map.selectFeature(mission);
+
     // // Show infos in popup
     // let feature = event.detail.feature;
     // map.showPopupInfo(feature);

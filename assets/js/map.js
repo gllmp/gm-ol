@@ -241,6 +241,34 @@ class OpenLayerMap {
         feature.setStyle(new Style(null)); 
     }
 
+    selectFeature(mission) {
+        let features = this.getFeatures();
+        let feature = this.getFeature(mission);
+
+        // if point exists on map
+        if (feature != undefined) {
+            // hide others features
+            features.forEach(element => {
+
+                if (element.get("mission") != mission) {
+                    this.hideFeature(element);
+                }
+            });
+            
+            // zoom and center
+            this.view.animate(
+                {
+                    zoom: 6,
+                    center: this.getFeatureCoordinates(mission),
+                },
+                function (result) {
+                    console.log("ANIMATION END: ", result);
+                }
+            );
+    
+        }
+    }
+
     showPopupInfo(feature) {
         let popupCoordinates = feature.getGeometry().getCoordinates();
         
