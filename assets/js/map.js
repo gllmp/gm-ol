@@ -274,11 +274,13 @@ class OpenLayerMap {
     }
 
     showPopupInfo(feature) {
-        let popupCoordinates = feature.getGeometry().getCoordinates();
+        if (feature != undefined) {
+            let popupCoordinates = feature.getGeometry().getCoordinates();
         
-        this.popup.setPosition(popupCoordinates);
-
-        this.popUpContent.innerHTML = feature.get("mission");
+            this.popup.setPosition(popupCoordinates);
+    
+            this.popUpContent.innerHTML = feature.get("mission");    
+        }
     }
 }
 

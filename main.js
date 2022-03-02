@@ -90,7 +90,7 @@ dataClass.ajaxRequest(url)
     // Select feature on map
     map.selectFeature(mission);
 
-    // // Show infos in popup
-    // let feature = event.detail.feature;
-    // map.showPopupInfo(feature);
+    // Show infos in popup
+    //let feature = event.detail.feature;
+    //map.showPopupInfo(feature);
   }
