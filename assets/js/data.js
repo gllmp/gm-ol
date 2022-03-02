@@ -31,8 +31,7 @@ class Data {
         
         return bstr;
     }
-    
-    
+
     getDataFromSheet(sheetData) {
         let processedData = [];
     
@@ -41,17 +40,18 @@ class Data {
         
             let name = element.cruise_name.split(", ")[1];
         
-            if ((name != "") && (name != "test") && (name != "NoData") && (name != "No Data")) {
+            if ((name != "") && (name != "test") && (name != "NoData") && (name != "No Data") && (name != " No Data")) {
                 const keys = Object.keys(element);
                 const vals = Object.keys(element).map(key => element[key]);
-                
+
                 for (let i=0; i<keys.length; i++) {
-                    let val = vals[i].split(", ")[1];
-            
-                    if ((val != "") && (val != "test") && (val != "NoData") && (val != "No Data")) {
+                    //let val = vals[i].split(", ")[1];
+                    let val = vals[i].substring(vals[i].indexOf(", ") + 1)
+
+                    if ((val != "") && (val != "test") && (val != "NoData") && (val != "No Data") && (val != "No Data")) {
                         let tempKeyVal = {};
                         tempKeyVal[keys[i]] = val;
-                        
+
                         Object.assign(obj, tempKeyVal);
                     }  
                 }
@@ -60,7 +60,7 @@ class Data {
             }
         });
         
-        return processedData;
+        return processedData;  
     }
     
     parseDataByLevels(sheetData) {
@@ -80,7 +80,7 @@ class Data {
             // add mission's names as keys
             let name = element.cruise_name.split(", ")[1];
 
-            if ((name != "") && (name != "test") && (name != "NoData") && (name != "No Data")) {
+            if ((name != "") && (name != "test") && (name != "NoData") && (name != "No Data") & (name != " No Data")) {
                 levelsData[name] = [];
 
                 // add levels as mission's keys
@@ -96,7 +96,7 @@ class Data {
                     let lvl = vals[i].split(", ")[0];
                     let val = vals[i].split(", ")[1];
             
-                    if ((val != "") && (val != "test") && (val != "NoData") && (val != "No Data")) {
+                    if ((val != "") && (val != "test") && (val != "NoData") && (val != "No Data") && (val != " No Data")) {
                         levelsData[name][lvl].push(keys[i])
                     }
                 }

@@ -197,13 +197,12 @@ class OpenLayerMap {
         _data.forEach(element => {
             let coords = [];
             let coordsStr = element.geographic_area_1;
-
             let mission = element[Object.keys(element)[0]];
 
-            if ((coordsStr != "") && (coordsStr != undefined) && (coordsStr != "test") && (coordsStr != "NoData") && (coordsStr != "No Data")) {
+            if ((coordsStr != "") && (coordsStr != undefined) && (coordsStr != "test") && (coordsStr != "NoData") && (coordsStr != "No Data") && (coordsStr != " No Data")) {
                 let lon = parseFloat(coordsStr.split("Longitude ").pop().split("_")[0]);
                 let lat = parseFloat(coordsStr.split("Latitude ").pop());
-        
+
                 coords.push(lon, lat);
         
                 this.addMarker(fromLonLat(coords), "mission", mission);
