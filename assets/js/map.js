@@ -52,14 +52,14 @@ class OpenLayerMap {
         
         this.features;
 
-        // elements that make up the popup
+        // Elements that make up the popup
          
         this.popUpContainer = document.getElementById('popup');
         this.popUpContent = document.getElementById('popup-content');
         this.popUpCloser = document.getElementById('popup-closer');
         
-        // create an overlay to anchor the popup to the map
-        
+        // Create an overlay to anchor the popup to the map
+
         this.popup = new Overlay({
             element: this.popUpContainer,
             autoPan: {
@@ -83,7 +83,7 @@ class OpenLayerMap {
             '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> ' +
             '<a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>';
         
-        // create the map.
+        // Create the map
         
         this.rasterLayer = new TileLayer({
             source: new TileJSON({
@@ -117,7 +117,7 @@ class OpenLayerMap {
         
         //console.log("MAP: ", map);
         
-        // add a click handler to the map to render the popup.
+        // Add a click handler to the map to render the popup
          
         //  this.map.on('singleclick', function (evt) {
         //     const coordinate = evt.coordinate;
@@ -127,7 +127,7 @@ class OpenLayerMap {
         //     _this.overlay.setPosition(coordinate);
         // });
         
-        // add marker on click
+        // Add marker on click
         // this.map.on('singleclick', function (evt) {
         //   const coordinate = evt.coordinate;
         //   //console.log(coordinate);
@@ -135,7 +135,7 @@ class OpenLayerMap {
         //   _this.addMarker(coordinate);
         // });
 
-        // display popup on click
+        // Display popup on click
         this.map.on('click', function (evt) {
             const feature = _this.map.forEachFeatureAtPixel(evt.pixel, function (feature) {
                 return feature;
@@ -161,7 +161,7 @@ class OpenLayerMap {
             }
         });
         
-        // change mouse cursor when over marker
+        // Change mouse cursor when over marker
         _this.map.on('pointermove', function (e) {
             const pixel = _this.map.getEventPixel(e.originalEvent);
             const hit = _this.map.hasFeatureAtPixel(pixel);
