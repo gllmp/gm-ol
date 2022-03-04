@@ -309,7 +309,7 @@ class OpenLayerMap {
             // Zoom and center
             this.views["HOME"].animate(
                 {
-                    zoom: 6,
+                    zoom: 8,
                     center: this.getFeatureCoordinates(mission),
                     duration: 1000,
                     easing: Easing.easeOut,
