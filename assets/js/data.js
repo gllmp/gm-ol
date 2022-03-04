@@ -4,7 +4,7 @@ class Data {
         
     }
 
-    /* set up XMLHttpRequest */
+    /* Set up XMLHttpRequest */
     ajaxRequest(url) {
         return new Promise(function(resolve, reject) {
             var xhr = new XMLHttpRequest();
@@ -40,7 +40,7 @@ class Data {
         
             let name = element.cruise_name.split(", ")[1];
         
-            if ((name != "") && (name != "test") && (name != "NoData") && (name != "No Data") && (name != " No Data")) {
+            if ((name != "") && (name != "test") && (name != " test") && (name != "NoData") && (name != "No Data") && (name != " No Data")) {
                 const keys = Object.keys(element);
                 const vals = Object.keys(element).map(key => element[key]);
 
@@ -48,7 +48,7 @@ class Data {
                     //let val = vals[i].split(", ")[1];
                     let val = vals[i].substring(vals[i].indexOf(", ") + 1)
 
-                    if ((val != "") && (val != "test") && (val != "NoData") && (val != "No Data") && (val != "No Data")) {
+                    if ((val != "") && (val != "test") && (val != " test") && (val != "NoData") && (val != "No Data") && (val != "No Data")) {
                         let tempKeyVal = {};
                         tempKeyVal[keys[i]] = val;
 
@@ -68,7 +68,7 @@ class Data {
         let levelMax = 1;
         
         sheetData.forEach(element => {
-            // get level max
+            // Get level max
             let vals = Object.values(element);
             
             for (let i=0; i<vals.length; i++) {
@@ -77,18 +77,18 @@ class Data {
                 levelMax = levelMax < lvl ? lvl : levelMax;
             }
 
-            // add mission's names as keys
+            // Add mission's names as keys
             let name = element.cruise_name.split(", ")[1];
 
-            if ((name != "") && (name != "test") && (name != "NoData") && (name != "No Data") & (name != " No Data")) {
+            if ((name != "") && (name != "test") && (name != " test") && (name != "NoData") && (name != "No Data") & (name != " No Data")) {
                 levelsData[name] = [];
 
-                // add levels as mission's keys
+                // Add levels as mission's keys
                 for (let i=0; i<levelMax; i++) {
                     levelsData[name][i+1] = [];
                 }
 
-                // add keys based on level
+                // Add keys based on level
                 const keys = Object.keys(element);
                 const vals = Object.values(element);
 
@@ -96,7 +96,7 @@ class Data {
                     let lvl = vals[i].split(", ")[0];
                     let val = vals[i].split(", ")[1];
             
-                    if ((val != "") && (val != "test") && (val != "NoData") && (val != "No Data") && (val != " No Data")) {
+                    if ((val != "") && (val != "test") && (val != " test") && (val != "NoData") && (val != "No Data") && (val != " No Data")) {
                         levelsData[name][lvl].push(keys[i])
                     }
                 }
