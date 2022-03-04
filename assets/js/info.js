@@ -4,38 +4,38 @@ class Info {
         
     }
     
-    addInfoFromData(_data, _levels) {
-        _data.forEach((element, index) => {             
-          // create mission-container element
-          let missionContainerElement = document.createElement("div");
-          missionContainerElement.classList.add("mission-container");
-          missionContainerElement.setAttribute('data-mission', Object.keys(_levels)[index]);
-          document.querySelector("#info").appendChild(missionContainerElement);
+    async addInfoFromData(_data, _levels) {
+      _data.forEach((element, index) => {             
+        // Create mission-container element
+        let missionContainerElement = document.createElement("div");
+        missionContainerElement.classList.add("mission-container");
+        missionContainerElement.setAttribute('data-mission', Object.keys(_levels)[index]);
+        document.querySelector("#info").appendChild(missionContainerElement);
 
-          // add mission level groups containers
-          let name = Object.keys(_levels)[index];
-          let levelMax = _levels[name].length - 1;
+        // Add mission level groups containers
+        let name = Object.keys(_levels)[index];
+        let levelMax = _levels[name].length - 1;
 
-          for (let i=1; i<=levelMax; i++) {
-            let missionLevelGroupElement = document.createElement("div");
-            missionLevelGroupElement.classList.add("mission-level-group");
-            missionLevelGroupElement.classList.add("level-" + (i));
-            
-            missionContainerElement.appendChild(missionLevelGroupElement);
+        for (let i=1; i<=levelMax; i++) {
+          let missionLevelGroupElement = document.createElement("div");
+          missionLevelGroupElement.classList.add("mission-level-group");
+          missionLevelGroupElement.classList.add("level-" + (i));
+          
+          missionContainerElement.appendChild(missionLevelGroupElement);
 
-            // add mission info elements based on their level
-            let currentLevelInfo = _levels[name][i];
-            
-            currentLevelInfo.forEach((info, order) => {
-              let isLink = (order == 0 && i == 1) || info.includes("tool") ? true : false;
-              let isMission = (order == 0 && i == 1) ? true : false;
+          // Add mission info elements based on their level
+          let currentLevelInfo = _levels[name][i];
+          
+          currentLevelInfo.forEach((info, order) => {
+            let isLink = (order == 0 && i == 1) || info.includes("tool") ? true : false;
+            let isMission = (order == 0 && i == 1) ? true : false;
 
-              let missionInfoElement = this.createInfoMarkup(info, element[info], isLink, isMission);
+            let missionInfoElement = this.createInfoMarkup(info, element[info], isLink, isMission);
 
-              missionLevelGroupElement.appendChild(missionInfoElement);
-            });
-          }          
-        });
+            missionLevelGroupElement.appendChild(missionInfoElement);
+          });
+        }
+      });
     }
     
     createInfoMarkup(_info, _data, isLink = false, isMission = false) {
@@ -84,13 +84,13 @@ class Info {
       if (mission != "") {
         // if mission name is specified
         
-        // remove leading space
+        // Remove leading space
         if (mission[0] == " ") mission = mission.substring(1);
 
         let missionContainerElements = document.getElementsByClassName("mission-container");
         
         for (let element of missionContainerElements) {
-          // show selected mission infos
+          // Show selected mission infos
           if (element.getAttribute("data-mission") == mission) {
             element.classList.remove("hidden");
 
@@ -99,16 +99,16 @@ class Info {
             let levelElement = element.getElementsByClassName("level-" + level)[0];
             levelElement.style.display = "block";
           } else {
-            // hide all others missions infos
+            // Hide all others missions infos
             element.classList.add("hidden");
           }
         }
       } else {
-        // if level only is specified
+        // If level only is specified
         let missionInfoElements = document.getElementsByClassName("mission-level-group");
 
         for (let element of missionInfoElements) {
-          // show selected level infos
+          // Show selected level infos
           if (element.classList.contains("level-" + level)) {
             element.style.display = "block";
           }
