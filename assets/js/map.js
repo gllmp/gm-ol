@@ -318,14 +318,19 @@ class OpenLayerMap {
                     // Animation end
                     console.log("ANIMATION END: ", result);
                     
-                    // Lock view on mission area
-                    _this.map.setView(_this.views[mission]);
+                    // Constrain view on mission area extent
+                    //_this.map.setView(_this.views[mission]);
+
+                    //let extent = _this.views[mission].calculateExtent(_this.map.getSize());
+                    //_this.map.getView().fit(extent, _this.map.getSize());
 
                     // Hide mission features
                     features.forEach(element => {
                         _this.hideFeature(element);
                     });
                     
+                    // Show tools markers
+                    _this.showToolsMarkers(mission);
                 }
             );
     
