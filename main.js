@@ -57,40 +57,43 @@ dataClass.ajaxRequest(url)
     return result;
   })
   .then(function(result) {
+    map.setViews(result);
+
     map.addPointsFromData(result);
+  })
+  .then(function(result) {
+    // Update map size after info panel resize
+    let infoPanelElement = document.getElementById("info");
+    
+    let resizeObserver = new ResizeObserver(() => {
+      map.map.updateSize();
+    });
+
+    resizeObserver.observe(infoPanelElement);
+
+    // On mission selected
+    const missionSelectedEvent = new CustomEvent('mission-selected');
+
+    document.addEventListener("mission-selected", onMissionSelected);
+
+    function onMissionSelected(event) {
+      // Set level
+      currentLevel = 2;
+
+      // Show new level infos
+      let mission = event.detail.mission;
+
+      info.showLevelInfo(currentLevel, mission);
+
+      // Select feature on map
+      map.selectFeature(mission);
+
+      // Show infos in popup
+      //let feature = event.detail.feature;
+      //map.showPopupInfo(feature);
+    }
   })
   .catch(function(error) {
     // An error occurred
     console.log("ERROR: ", error);
   });
-
-  // Update map size after info panel resize
-  let infoPanelElement = document.getElementById("info");
-  
-  let resizeObserver = new ResizeObserver(() => {
-    map.map.updateSize();
-  });
-
-  resizeObserver.observe(infoPanelElement);
-
-  // On mission selected
-  const missionSelectedEvent = new CustomEvent('mission-selected');
-
-  document.addEventListener("mission-selected", onMissionSelected);
-
-  function onMissionSelected(event) {
-    // Set level
-    currentLevel = 2;
-
-    // Show new level infos
-    let mission = event.detail.mission;
-
-    info.showLevelInfo(currentLevel, mission);
-
-    // Select feature on map
-    map.selectFeature(mission);
-
-    // Show infos in popup
-    //let feature = event.detail.feature;
-    //map.showPopupInfo(feature);
-  }
