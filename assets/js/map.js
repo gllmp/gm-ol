@@ -53,13 +53,11 @@ class OpenLayerMap {
         this.features;
 
         // Elements that make up the popup
-         
         this.popUpContainer = document.getElementById('popup');
         this.popUpContent = document.getElementById('popup-content');
         this.popUpCloser = document.getElementById('popup-closer');
         
         // Create an overlay to anchor the popup to the map
-
         this.popup = new Overlay({
             element: this.popUpContainer,
             autoPan: {
@@ -71,7 +69,6 @@ class OpenLayerMap {
         
         // add a click handler to hide the popup
         // @return {boolean} Don't follow the href
-         
          this.popUpCloser.onclick = function () {
             _this.popup.setPosition(undefined);
             _this.popUpCloser.blur();
@@ -84,7 +81,6 @@ class OpenLayerMap {
             '<a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>';
         
         // Create the map
-        
         this.rasterLayer = new TileLayer({
             source: new TileJSON({
             url: 'https://a.tiles.mapbox.com/v3/aj.1x1-degrees.json?secure=1',
@@ -103,7 +99,6 @@ class OpenLayerMap {
         // Views
         // Spherical Mercator: EPSG:3857
         // Lon/Lat coordinates: EPSG:4326
-
         this.views = [];
         this.views["HOME"] = new View({
             center: [0, 0],
@@ -224,34 +219,6 @@ class OpenLayerMap {
             // Tool points
             await this.addToolsMarkers(element);
         }
-        
-        // _data.forEach(async element => {            
-        //     // Mission points
-        //     let missionName = element[Object.keys(element)[0]];
-        //      missionName = missionName.split(" ")[1];
-
-        //     let coords = await this.getMissionCoordinates(element);
-            
-        //     //let coords = [];
-        //     let coordsStr = missionName.geographic_area_1;
-
-        //     if ((coordsStr != "") && (coordsStr != undefined) && (coordsStr != "test") && (coordsStr != " test") && (coordsStr != "NoData") && (coordsStr != "No Data") && (coordsStr != " No Data")) {
-        //         let lon = parseFloat(coordsStr.split("Longitude ").pop().split("_")[0]);
-        //         let lat = parseFloat(coordsStr.split("Latitude ").pop());
-
-        //         coords.push(lon, lat);
-        
-        //         this.addMarker(fromLonLat(coords), "mission", missionName);
-        //     }
-
-        //     // Tool points
-        //     let tools = this.getTools(element);
-        //     console.log(tools);
-
-        //     // for (let i=0; i<tools.length; i++) {
-        //     //     console.log(tools[i]);
-        //     // }
-        // });
     }
 
     addMarker(coordinates, type = "", mission = "") {
@@ -350,35 +317,6 @@ class OpenLayerMap {
                 function (result) {
                     // Animation end
                     console.log("ANIMATION END: ", result);
-                    
-                    // var west = -5.3;
-                    // var south = 35.1;
-                    // var east = -2.1;
-                    // var north = 36.9;
-
-                    // var newlonLat = fromLonLat([west, north]);
-                    // var west_3857 = newlonLat[0];
-                    // var north_3857 = newlonLat[1];
-              
-                    // newlonLat = fromLonLat([east, south]);
-                    // var east_3857 = newlonLat[0];
-                    // var south_3857 = newlonLat[1];
-              
-                    // var extent = [west_3857, south_3857, east_3857, north_3857];
-             
-                    // _this.map.setView(
-                    //     new View({
-                    //         center: [0, 0],
-                    //         zoom: 6,
-                    //         extent: extent,
-
-                    //         //extent: [-5.3, 35.1, -2.1, 36.9],
-                    //         //projection: "EPSG:4326",
-
-                    //         //projection: projection,
-                    //         //extent: _this.map.getView().calculateExtent(_this.map.getSize()),   
-                    //       })
-                    // );
                     
                     // Lock view on mission area
                     _this.map.setView(_this.views[mission]);
