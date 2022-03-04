@@ -257,25 +257,36 @@ class OpenLayerMap {
             type: type,
             mission: mission
         });
+
         marker.setStyle(this.iconStyle);
 
         this.vectorSource.addFeature(marker);
     }
-    
-    // Add mission points on map
-    addPointsFromData(_data) {
-        _data.forEach(element => {
-            let coords = [];
-            let coordsStr = element.geographic_area_1;
-            let mission = element[Object.keys(element)[0]];
 
-            if ((coordsStr != "") && (coordsStr != undefined) && (coordsStr != "test") && (coordsStr != "NoData") && (coordsStr != "No Data") && (coordsStr != " No Data")) {
+    addMissionMarkers(mission) {
+        let _this = this;
+
+        return new Promise(function (resolve, reject) {
+            let missionName = mission[Object.keys(mission)[0]];
+            missionName = missionName.split(" ")[1];
+
+            let coords = [];
+            let coordsStr = mission.geographic_area_1;
+
+            if ((coordsStr != "") && (coordsStr != undefined) && (coordsStr != "test") && (coordsStr != " test") && (coordsStr != "NoData") && (coordsStr != "No Data") && (coordsStr != " No Data")) {
                 let lon = parseFloat(coordsStr.split("Longitude ").pop().split("_")[0]);
                 let lat = parseFloat(coordsStr.split("Latitude ").pop());
 
                 coords.push(lon, lat);
-        
-                this.addMarker(fromLonLat(coords), "mission", mission);
+                
+                _this.addMarker(fromLonLat(coords), "mission", missionName);
+            }
+
+            resolve();
+        });
+    }
+
+
             }
         });
     }
