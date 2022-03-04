@@ -175,7 +175,82 @@ class OpenLayerMap {
             //_this.popUpContainer.popover('dispose');
         });
     }
+
+    // Set mission views
+    setViews(_data) {
+        for (const [index, mission] of _data.entries()) {
+            let missionName = mission[Object.keys(mission)[0]];
+            missionName = missionName.split(" ")[1];
+
+            let coordsStr = mission.geographic_area_2;
+
+            if ((coordsStr != "") && (coordsStr != undefined) && (coordsStr != "test") && (coordsStr != " test") && (coordsStr != "NoData") && (coordsStr != "No Data") && (coordsStr != " No Data")) {                    
+                let north = parseFloat(coordsStr.split("North ").pop().split("_")[0]);
+                let south = parseFloat(coordsStr.split("South ").pop().split("_")[0]);
+                let west = parseFloat(coordsStr.split("West ").pop().split("_")[0]);
+                let east = parseFloat(coordsStr.split("East ").pop().split("_")[0]);
     
+                let newLonLat = fromLonLat([west, north]);
+                let west_3857 = newLonLat[0];
+                let north_3857 = newLonLat[1];
+            
+                newLonLat = fromLonLat([east, south]);
+                let east_3857 = newLonLat[0];
+                let south_3857 = newLonLat[1];
+            
+                let extent = [west_3857, south_3857, east_3857, north_3857];
+
+                let view = new View({
+                    center: [0, 0],
+                    zoom: 6,
+                    extent: extent,
+                });
+
+                this.views[missionName] = view;
+            }    
+        }
+    }
+
+    
+    // Add mission points on map
+    async addPointsFromData(_data) {
+        for (const [index, element] of _data.entries()) {
+            // Mission points
+            await this.addMissionMarkers(element);
+
+            // Tool points
+            await this.addToolsMarkers(element);
+        }
+        
+        // _data.forEach(async element => {            
+        //     // Mission points
+        //     let missionName = element[Object.keys(element)[0]];
+        //      missionName = missionName.split(" ")[1];
+
+        //     let coords = await this.getMissionCoordinates(element);
+            
+        //     //let coords = [];
+        //     let coordsStr = missionName.geographic_area_1;
+
+        //     if ((coordsStr != "") && (coordsStr != undefined) && (coordsStr != "test") && (coordsStr != " test") && (coordsStr != "NoData") && (coordsStr != "No Data") && (coordsStr != " No Data")) {
+        //         let lon = parseFloat(coordsStr.split("Longitude ").pop().split("_")[0]);
+        //         let lat = parseFloat(coordsStr.split("Latitude ").pop());
+
+        //         coords.push(lon, lat);
+        
+        //         this.addMarker(fromLonLat(coords), "mission", missionName);
+        //     }
+
+        //     // Tool points
+        //     let tools = this.getTools(element);
+        //     console.log(tools);
+
+        //     // for (let i=0; i<tools.length; i++) {
+        //     //     console.log(tools[i]);
+        //     // }
+        // });
+    }
+
     addMarker(coordinates, type = "", mission = "") {
         let marker = new ol.Feature({
             geometry: new Point(coordinates),
