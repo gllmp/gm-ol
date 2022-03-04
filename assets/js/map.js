@@ -100,19 +100,22 @@ class OpenLayerMap {
             }),
         });
         
+        // Views
         // Spherical Mercator: EPSG:3857
         // Lon/Lat coordinates: EPSG:4326
-        this.view = new View({
+
+        this.views = [];
+        this.views["HOME"] = new View({
             center: [0, 0],
             zoom: 2,
             //projection: "EPSG:4326"
-        })
-        
+        });
+
         this.map = new Map({
             layers: [this.mapTiler, this.vectorLayer],
             overlays: [this.popup],
             target: 'map',
-            view: this.view
+            view: this.views["HOME"]
         });
         
         //console.log("MAP: ", map);
@@ -329,29 +332,61 @@ class OpenLayerMap {
     }
 
     selectFeature(mission) {
+        let _this = this;
+
         let features = this.getFeatures();
         let feature = this.getFeature(mission);
 
-        // if point exists on map
-        if (feature != undefined) {
-            // hide others features
-            features.forEach(element => {
-                if (element.get("mission") != mission) {
-                    this.hideFeature(element);
-                }
-            });
-            
-            // zoom and center
-            this.view.animate(
+        // If point exists on map
+        if (feature != undefined) {    
+            // Zoom and center
+            this.views["HOME"].animate(
                 {
                     zoom: 6,
                     center: this.getFeatureCoordinates(mission),
                     duration: 1000,
-                    easing: Easing.easeOut
+                    easing: Easing.easeOut,
                 },
                 function (result) {
-                    // animation end
+                    // Animation end
                     console.log("ANIMATION END: ", result);
+                    
+                    // var west = -5.3;
+                    // var south = 35.1;
+                    // var east = -2.1;
+                    // var north = 36.9;
+
+                    // var newlonLat = fromLonLat([west, north]);
+                    // var west_3857 = newlonLat[0];
+                    // var north_3857 = newlonLat[1];
+              
+                    // newlonLat = fromLonLat([east, south]);
+                    // var east_3857 = newlonLat[0];
+                    // var south_3857 = newlonLat[1];
+              
+                    // var extent = [west_3857, south_3857, east_3857, north_3857];
+             
+                    // _this.map.setView(
+                    //     new View({
+                    //         center: [0, 0],
+                    //         zoom: 6,
+                    //         extent: extent,
+
+                    //         //extent: [-5.3, 35.1, -2.1, 36.9],
+                    //         //projection: "EPSG:4326",
+
+                    //         //projection: projection,
+                    //         //extent: _this.map.getView().calculateExtent(_this.map.getSize()),   
+                    //       })
+                    // );
+                    
+                    // Lock view on mission area
+                    _this.map.setView(_this.views[mission]);
+
+                    // Hide mission features
+                    features.forEach(element => {
+                        _this.hideFeature(element);
+                    });
                     
                 }
             );
