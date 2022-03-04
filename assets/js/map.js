@@ -311,7 +311,7 @@ class OpenLayerMap {
                 {
                     zoom: 8,
                     center: this.getFeatureCoordinates(mission),
-                    duration: 1000,
+                    duration: 800,
                     easing: Easing.easeOut,
                 },
                 function (result) {
