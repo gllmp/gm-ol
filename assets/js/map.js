@@ -177,8 +177,7 @@ class OpenLayerMap {
     // Set mission views
     setViews(_data) {
         for (const [index, mission] of _data.entries()) {
-            let missionName = mission[Object.keys(mission)[0]];
-            missionName = missionName.split(" ")[1];
+            let missionName = this.getMissionName(mission);
 
             let coordsStr = mission.geographic_area_2;
 
@@ -237,8 +236,7 @@ class OpenLayerMap {
         let _this = this;
 
         return new Promise(function (resolve, reject) {
-            let missionName = mission[Object.keys(mission)[0]];
-            missionName = missionName.split(" ")[1];
+            let missionName = _this.getMissionName(mission);
 
             let coords = [];
             let coordsStr = mission.geographic_area_1;
@@ -259,6 +257,13 @@ class OpenLayerMap {
 
             }
         });
+    }
+
+    getMissionName(mission) {
+        let missionName = mission[Object.keys(mission)[0]];
+        missionName = missionName.split(" ")[1];
+
+        return missionName;
     }
 
     getFeatures() {
