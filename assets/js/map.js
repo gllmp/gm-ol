@@ -265,6 +265,26 @@ class OpenLayerMap {
 
         return [lon, lat];
     }
+
+    generateCircularCoordinates(center, steps, r = 1, offset = 0.5) {
+        let coords = [];
+
+        let radius = r;
+        let angle = 0;
+        let step = (2 * Math.PI)/steps;
+
+        for (let i=0; i<steps; i++) {
+            let lon = radius * Math.sin(angle) + (Math.random() * offset - offset);
+            let lat = radius * Math.cos(angle);
+
+            coords.push([lon, lat]);
+
+            angle = angle + step;
+        }
+
+        return coords;
+    }
+
     getTools(mission) {
         let tools = [];
 
