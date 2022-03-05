@@ -257,8 +257,18 @@ class OpenLayerMap {
     }
 
 
+    getTools(mission) {
+        let tools = [];
+
+        Object.keys(mission).forEach((key, index) => {
+            if (key.includes("tool")) {
+                if ((mission[key] != "") && (mission[key] != undefined) && (mission[key] != "test") && (mission[key] != " test") && (mission[key] != "NoData") && (mission[key] != "No Data") && (mission[key] != " No Data")) {
+                    tools[Object.keys(mission)[index]] = mission[key];
+                }
             }
         });
+
+        return(tools);
     }
 
     getMissionName(mission) {
