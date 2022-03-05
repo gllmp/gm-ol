@@ -12,6 +12,7 @@ import VectorSource from 'ol/source/Vector';
 import {Icon, Style} from 'ol/style';
 import TileLayer from 'ol/layer/Tile';
 import View from 'ol/View';
+import * as olExtent from 'ol/extent';
 import XYZ from 'ol/source/XYZ';
 import {toLonLat, fromLonLat} from 'ol/proj';
 import {toStringHDMS} from 'ol/coordinate';
