@@ -19,8 +19,10 @@ import {toStringHDMS} from 'ol/coordinate';
 import * as Easing from 'ol/easing';
 
 class OpenLayerMap {
-    constructor() {
+    constructor(_data) {
         let _this = this;
+
+        this.data = _data;
 
         // Icon
         // this.iconFeature = new Feature({
@@ -209,7 +211,6 @@ class OpenLayerMap {
         }
     }
 
-    
     // Add mission points on map
     async addPointsFromData(_data) {
         for (const [index, element] of _data.entries()) {

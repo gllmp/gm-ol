@@ -6,7 +6,7 @@ import Map from './assets/js/map';
 let info = new Info();
 
 /* MAP */
-let map = new Map();
+let map;
 
 /* DATA */
 let dataClass = new Data();
@@ -50,6 +50,7 @@ dataClass.ajaxRequest(url)
     return data;
   })
   .then(function(result) {
+    // Info
     info.addInfoFromData(result, levels);
     
     info.showLevelInfo(1);
@@ -57,7 +58,10 @@ dataClass.ajaxRequest(url)
     return result;
   })
   .then(function(result) {
-    map.setViews(result);
+    // Map
+    map = new Map(result);
+
+    //map.setViews(result);
 
     map.addPointsFromData(result);
   })
