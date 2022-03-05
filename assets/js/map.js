@@ -218,20 +218,28 @@ class OpenLayerMap {
             await this.addMissionMarkers(element);
 
             // Tool points
-            await this.addToolsMarkers(element);
+            //await this.addToolsMarkers(element);
         }
     }
 
-    addMarker(coordinates, type = "", mission = "") {
+    addMarker(coordinates, type = "", mission = "", tool = "") {
         let marker = new ol.Feature({
             geometry: new Point(coordinates),
             type: type,
-            mission: mission
+            mission: mission,
+            tool: tool,
         });
 
-        marker.setStyle(this.iconStyle);
 
+        marker.setStyle(this.iconStyle);
+        
         this.vectorSource.addFeature(marker);
+        
+        if (type == "tool") {
+            let center = this.getFeatureCoordinates(mission);
+
+            marker.getGeometry().translate(center[0], center[1]);
+        }
     }
 
     addMissionMarkers(mission) {
@@ -248,8 +256,64 @@ class OpenLayerMap {
                 let lat = parseFloat(coordsStr.split("Latitude ").pop());
 
                 coords.push(lon, lat);
-                
+
                 _this.addMarker(fromLonLat(coords), "mission", missionName);
+            }
+
+            resolve();
+        });
+    }
+
+    addToolsMarkers(mission) {
+        let _this = this;
+
+        let tools = this.getTools(mission);
+
+        return new Promise(function (resolve, reject) {
+            let missionName = _this.getMissionName(mission);
+
+            let coordsStr = mission.geographic_area_2;
+
+            if ((coordsStr != "") && (coordsStr != undefined) && (coordsStr != "test") && (coordsStr != " test") && (coordsStr != "NoData") && (coordsStr != "No Data") && (coordsStr != " No Data")) {                
+                const keys = Object.keys(tools);
+                const vals = Object.values(tools);
+
+                let north = parseFloat(coordsStr.split("North ").pop().split("_")[0]);
+                let south = parseFloat(coordsStr.split("South ").pop().split("_")[0]);
+                let west = parseFloat(coordsStr.split("West ").pop().split("_")[0]);
+                let east = parseFloat(coordsStr.split("East ").pop().split("_")[0]);
+                    
+                let newLonLat = [west, north];
+                let west_3857 = newLonLat[0];
+                let north_3857 = newLonLat[1];
+            
+                newLonLat = [east, south];
+                let east_3857 = newLonLat[0];
+                let south_3857 = newLonLat[1];
+            
+                let extent = [west_3857, south_3857, east_3857, north_3857];
+
+                let center = toLonLat(_this.getFeatureCoordinates(missionName));
+                let steps = keys.length;
+
+                let coords = _this.generateCircularCoordinates(center, steps, 0.5);
+
+                for (const [index, key] of keys.entries()) {
+                    // Generate random coordinates
+                    //let coords = _this.generateRandomCoordinates(extent);
+
+                    // Check if inside bounding box, otherwise generate new coordinates
+
+                    // Add tool marker 
+                    let tool = {
+                        [key]: vals[index]
+                    }
+
+                    //_this.addMarker(fromLonLat(coords), "tool", missionName, tool);
+                    _this.addMarker(fromLonLat(coords[index]), "tool", missionName, tool);                
+
+                }
+
             }
 
             resolve();
@@ -318,8 +382,10 @@ class OpenLayerMap {
         let feature;
 
         features.forEach(element => {
-            if (element.get("mission") == mission) {
-                feature = element;
+            if (element.get("type") == "mission") {
+                if (element.get("mission") == mission) {
+                    feature = element;
+                }    
             }
         });
 
@@ -350,35 +416,45 @@ class OpenLayerMap {
         let feature = this.getFeature(mission);
 
         // If point exists on map
-        if (feature != undefined) {    
-            // Zoom and center
-            this.views["HOME"].animate(
-                {
-                    zoom: 8,
-                    center: this.getFeatureCoordinates(mission),
-                    duration: 800,
-                    easing: Easing.easeOut,
-                },
-                function (result) {
-                    // Animation end
-                    console.log("ANIMATION END: ", result);
-                    
-                    // Constrain view on mission area extent
-                    //_this.map.setView(_this.views[mission]);
+        if (feature != undefined) {
+            // If selected feature is a mission
+            if (feature.get("type") == "mission") {
+                // Zoom and center
+                this.views["HOME"].animate(
+                    {
+                        zoom: 9,
+                        center: this.getFeatureCoordinates(mission),
+                        duration: 1000,
+                        easing: Easing.easeOut,
+                    },
+                    function (result) {
+                        // Animation end
+                        console.log("MISSION SELECTED: ", mission);
+                        
+                        // Constrain view on mission area extent
+                        //_this.map.setView(_this.views[mission]);
 
-                    //let extent = _this.views[mission].calculateExtent(_this.map.getSize());
-                    //_this.map.getView().fit(extent, _this.map.getSize());
+                        //let extent = _this.views[mission].calculateExtent(_this.map.getSize());
+                        //_this.map.getView().fit(extent, _this.map.getSize());
 
-                    // Hide mission features
-                    features.forEach(element => {
-                        _this.hideFeature(element);
-                    });
-                    
-                    // Show tools markers
-                    _this.showToolsMarkers(mission);
-                }
-            );
-    
+                        // Hide mission features
+                        features.forEach(element => {
+                            _this.hideFeature(element);
+                        });
+                        
+                        // Show tools markers
+                        for (const [index, element] of _this.data.entries()) {                
+                            // Tool points
+                            let missionName = _this.getMissionName(element);
+
+                            if (missionName == mission) {
+                                _this.addToolsMarkers(element);
+                            }
+                        }
+                
+                    }
+                );
+            }
         }
     }
 
