@@ -256,7 +256,15 @@ class OpenLayerMap {
         });
     }
 
+    generateRandomCoordinates(extent) {
+        let minX, minY, maxX, maxY;
+        [minX, minY, maxX, maxY] = extent;
 
+        let lon = Math.floor(Math.random() * (maxX - minX + 1) + minX);
+        let lat = Math.floor(Math.random() * (maxY - minY + 1) + minY);
+
+        return [lon, lat];
+    }
     getTools(mission) {
         let tools = [];
 
