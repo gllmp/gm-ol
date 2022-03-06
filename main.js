@@ -77,6 +77,7 @@ dataClass.ajaxRequest(url)
     const missionSelectedEvent = new CustomEvent('mission-selected');
 
     document.addEventListener("mission-selected", onMissionSelected);
+    document.addEventListener("tool-selected", onToolSelected);
 
     function onMissionSelected(event) {
       // Set level
@@ -94,6 +95,14 @@ dataClass.ajaxRequest(url)
       //let feature = event.detail.feature;
       //map.showPopupInfo(feature);
     }
+
+    function onToolSelected(event) {
+      // Show infos in popup
+      let feature = event.detail.feature;
+
+      map.showPopupInfo(feature);
+    }
+
   })
   .catch(function(error) {
     // An error occurred

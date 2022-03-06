@@ -149,7 +149,14 @@ class OpenLayerMap {
                     let customEvent = new CustomEvent('mission-selected', {'detail': {mission, feature}});
               
                     document.dispatchEvent(customEvent);
+                } else if (feature.get("type") == "tool") {
+                    let mission = feature.get("mission");
+      
+                    let customEvent = new CustomEvent('tool-selected', {'detail': {mission, feature}});
+              
+                    document.dispatchEvent(customEvent);
                 }
+
 
                 // _this.popUpContainer.popover({
                 //     placement: 'top',
@@ -456,12 +463,30 @@ class OpenLayerMap {
     }
 
     showPopupInfo(feature) {
+        let mission = feature.get("mission");
+
         if (feature != undefined) {
-            let popupCoordinates = feature.getGeometry().getCoordinates();
-        
-            this.popup.setPosition(popupCoordinates);
-    
-            this.popUpContent.innerHTML = feature.get("mission");    
+            if (feature.get("type") == "tool") {
+                let popupCoordinates = feature.getGeometry().getCoordinates();
+
+                this.popup.setPosition(popupCoordinates);
+                
+                let toolTitleElement = document.createElement("h1");
+                toolTitleElement.classList.add("tool-title");
+                toolTitleElement.innerHTML = Object.keys(feature.get("tool"))[0].replaceAll("_",  " ").toUpperCase();
+
+                let toolContentElement = document.createElement("p");
+                toolContentElement.classList.add("tool-content");
+                toolContentElement.innerHTML = Object.values(feature.get("tool"))[0];
+                
+                // Empty popup content
+                this.popUpContent.innerHTML = "";
+
+                this.popUpContent.appendChild(toolTitleElement);
+                this.popUpContent.appendChild(toolContentElement);
+
+                console.log("TOOL SELECTED: ", toolTitleElement.innerHTML);
+            } 
         }
     }
 }
