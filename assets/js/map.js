@@ -424,7 +424,7 @@ class OpenLayerMap {
                         duration: 1000,
                         easing: Easing.easeOut,
                     },
-                    function (result) {
+                    async function (result) {
                         // Animation end
                         console.log("MISSION SELECTED: ", mission);
                         
@@ -445,7 +445,7 @@ class OpenLayerMap {
                             let missionName = _this.getMissionName(element);
 
                             if (missionName == mission) {
-                                _this.addToolsMarkers(element);
+                                await _this.addToolsMarkers(element);
                             }
                         }
                 
