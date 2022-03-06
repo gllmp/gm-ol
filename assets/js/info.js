@@ -83,7 +83,6 @@ class Info {
     showLevelInfo(level, mission = "") {
       // if mission name is specified
       if (mission != "") {
-        
         // Remove leading space
         if (mission[0] == " ") mission = mission.substring(1);
 
@@ -113,6 +112,36 @@ class Info {
             element.style.display = "block";
           }
         }
+      }
+    }
+
+    resetLevelInfo(level) {
+      // Reset info panel
+      if (level == 1) {
+        let missionContainerElements = document.getElementsByClassName("mission-container");
+
+        for (let element of missionContainerElements) {
+          // Hide selected mission sublevel infos
+          if (element.classList.contains("selected")) {
+            element.classList.remove("selected");
+
+            let missionInfoElements = element.getElementsByClassName("mission-level-group");
+            for (let i = 1; i<missionInfoElements.length; i++) {
+              missionInfoElements[i].style.display = "none";
+            }
+          }
+
+          // Show all mission infos
+          element.classList.remove("hidden");
+        }
+        // let missionInfoElements = document.getElementsByClassName("mission-level-group");
+
+        // for (let element of missionInfoElements) {
+        //   // Show selected level infos
+        //   if (element.classList.contains("level-" + level)) {
+        //     element.style.display = "block";
+        //   }
+        // }        
       }
     }
 

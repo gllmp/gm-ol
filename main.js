@@ -95,9 +95,8 @@ dataClass.ajaxRequest(url)
       // Select feature on map
       map.selectFeature(currentMission);
 
-      // Show infos in popup
-      //let feature = event.detail.feature;
-      //map.showPopupInfo(feature);
+      // Back button
+      backButtonElement.disabled = false;
     }
 
     function onToolSelected(event) {
@@ -119,6 +118,8 @@ dataClass.ajaxRequest(url)
       // Back button
       if (currentLevel == 1) backButtonElement.disabled = true;
 
+      // Show level info
+      info.resetLevelInfo(currentLevel)
     }
   })
   .catch(function(error) {
