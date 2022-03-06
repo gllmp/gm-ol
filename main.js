@@ -15,6 +15,8 @@ let data = [];
 let levels = [];
 
 let currentLevel = 1;
+let currentMission = "";
+let currentTool = "";
 
 let url = "./assets/data/Attributs_Visuel_Web.xlsx";
 
@@ -84,12 +86,12 @@ dataClass.ajaxRequest(url)
       currentLevel = 2;
 
       // Show new level infos
-      let mission = event.detail.mission;
+      currentMission = event.detail.mission;
 
-      info.showLevelInfo(currentLevel, mission);
+      info.showLevelInfo(currentLevel, currentMission);
 
       // Select feature on map
-      map.selectFeature(mission);
+      map.selectFeature(currentMission);
 
       // Show infos in popup
       //let feature = event.detail.feature;
@@ -97,6 +99,8 @@ dataClass.ajaxRequest(url)
     }
 
     function onToolSelected(event) {
+      currentTool = Object.keys(event.detail.feature.get("tool"))[0];
+
       // Show infos in popup
       let feature = event.detail.feature;
 
