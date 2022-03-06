@@ -335,7 +335,7 @@ class OpenLayerMap {
         let step = (2 * Math.PI)/steps;
 
         for (let i=0; i<steps; i++) {
-            let lon = radius * Math.sin(angle) + (Math.random() * offset - offset);
+            let lon = radius * Math.sin(angle) + (Math.random() * offset - (offset/2));
             let lat = radius * Math.cos(angle);
 
             coords.push([lon, lat]);
