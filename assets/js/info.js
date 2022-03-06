@@ -81,8 +81,8 @@ class Info {
     }
 
     showLevelInfo(level, mission = "") {
+      // if mission name is specified
       if (mission != "") {
-        // if mission name is specified
         
         // Remove leading space
         if (mission[0] == " ") mission = mission.substring(1);
@@ -122,11 +122,13 @@ class Info {
 
       if (!event.target.classList.contains("mission-info-link")) {
         target = event.target.parentElement;
-        mission = target.getAttribute("data-mission");  
+        mission = target.getAttribute("data-mission");
       } else {
         mission = event.target.getAttribute("data-mission");
       }
       
+      mission = mission.split(" ")[1];
+
       let customEvent = new CustomEvent('mission-selected', {'detail': {mission}});
 
       document.dispatchEvent(customEvent);

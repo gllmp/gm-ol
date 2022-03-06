@@ -61,8 +61,6 @@ dataClass.ajaxRequest(url)
     // Map
     map = new Map(result);
 
-    //map.setViews(result);
-
     map.addPointsFromData(result);
   })
   .then(function(result) {
