@@ -278,46 +278,43 @@ class OpenLayerMap {
                 const keys = Object.keys(tools);
                 const vals = Object.values(tools);
 
-                let north = parseFloat(coordsStr.split("North ").pop().split("_")[0]);
-                let south = parseFloat(coordsStr.split("South ").pop().split("_")[0]);
-                let west = parseFloat(coordsStr.split("West ").pop().split("_")[0]);
-                let east = parseFloat(coordsStr.split("East ").pop().split("_")[0]);
-                    
-                let newLonLat = [west, north];
-                let west_3857 = newLonLat[0];
-                let north_3857 = newLonLat[1];
-            
-                newLonLat = [east, south];
-                let east_3857 = newLonLat[0];
-                let south_3857 = newLonLat[1];
-            
-                let extent = [west_3857, south_3857, east_3857, north_3857];
-
                 let center = toLonLat(_this.getFeatureCoordinates(missionName));
                 let steps = keys.length;
 
-                let coords = _this.generateCircularCoordinates(center, steps, 0.5);
+                let coords = _this.generateCircularCoordinates(center, steps, 0.6, 0.6);
 
                 for (const [index, key] of keys.entries()) {
-                    // Generate random coordinates
-                    //let coords = _this.generateRandomCoordinates(extent);
-
-                    // Check if inside bounding box, otherwise generate new coordinates
-
                     // Add tool marker 
                     let tool = {
                         [key]: vals[index]
                     }
 
-                    //_this.addMarker(fromLonLat(coords), "tool", missionName, tool);
                     _this.addMarker(fromLonLat(coords[index]), "tool", missionName, tool);                
-
                 }
 
             }
 
             resolve();
         });
+    }
+
+    setAreaExtent(coordsStr) {
+        let north = parseFloat(coordsStr.split("North ").pop().split("_")[0]);
+        let south = parseFloat(coordsStr.split("South ").pop().split("_")[0]);
+        let west = parseFloat(coordsStr.split("West ").pop().split("_")[0]);
+        let east = parseFloat(coordsStr.split("East ").pop().split("_")[0]);
+            
+        let newLonLat = [west, north];
+        let west_3857 = newLonLat[0];
+        let north_3857 = newLonLat[1];
+    
+        newLonLat = [east, south];
+        let east_3857 = newLonLat[0];
+        let south_3857 = newLonLat[1];
+    
+        let extent = [west_3857, south_3857, east_3857, north_3857];
+
+        return extent;
     }
 
     generateRandomCoordinates(extent) {
