@@ -55,6 +55,14 @@ html, body {
   color: #000;
 }
 
+#back-button {
+  margin-top: 2em;
+}
+
+#back-button:hover {
+  cursor: pointer;
+}
+
 .selected {
   display: block;
 }
