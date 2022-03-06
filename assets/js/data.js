@@ -13,6 +13,10 @@ class Data {
             };
             xhr.onerror = reject;
             xhr.open('GET', url);
+            
+            //xhr.setRequestHeader("Target-Endpoint", "https://github.com/gllmp/gm-ol/blob/main/assets/data/Attributs_Visuel_Web.xlsx");
+            //xhr.setRequestHeader("Target-Endpoint", "https://docs.google.com/spreadsheets/d/1lXGYPIITZfSEzN4XdRXRreDcHx5vRik8/export?gid=243091869&format=csv");
+
             xhr.responseType = "arraybuffer";
             
             xhr.send();
