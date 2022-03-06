@@ -119,7 +119,10 @@ dataClass.ajaxRequest(url)
       if (currentLevel == 1) backButtonElement.disabled = true;
 
       // Show level info
-      info.resetLevelInfo(currentLevel)
+      info.resetLevelInfo(currentLevel);
+
+      // Reset map view
+      map.resetMapView(currentLevel, currentMission);
     }
   })
   .catch(function(error) {

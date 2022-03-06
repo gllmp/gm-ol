@@ -493,6 +493,44 @@ class OpenLayerMap {
             } 
         }
     }
-}
+
+    resetMapView(level = 1, mission) {
+        // Reset map view
+        if (level == 1) {
+            let _this = this;
+
+            let features = this.getFeatures();
+            let feature = this.getFeature(mission);
+    
+            // If point exists on map
+            if (feature != undefined) {
+                // Remove all mission and tools features
+                this.removeAllFeatures();
+                
+                // Close popup
+                this.popup.setPosition(undefined);
+                this.popUpCloser.blur();
+    
+                // Zoom and center
+                this.views["HOME"].animate(
+                    {
+                        center: [0, 0],
+                        zoom: 2,
+                        duration: 1000,
+                        easing: Easing.easeOut,
+                    },
+                    async function (result) {
+                        // Animation end
+                        console.log("VIEW RESET");
+                                                    
+                        // Add mission markers
+                        _this.addPointsFromData(_this.data);
+                    }
+                );
+            }
+
+        }
+    }
+}   
 
 export default OpenLayerMap;
