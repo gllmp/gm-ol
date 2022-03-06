@@ -5,6 +5,8 @@ import Map from './assets/js/map';
 /* INFO */
 let info = new Info();
 
+let backButtonElement = document.getElementById("back-button");
+
 /* MAP */
 let map;
 
@@ -107,6 +109,17 @@ dataClass.ajaxRequest(url)
       map.showPopupInfo(feature);
     }
 
+    // Back button clicked
+    backButtonElement.addEventListener("click", onBackButtonClicked);
+
+    function onBackButtonClicked(event) {
+      // Set level
+      if (currentLevel > 1) currentLevel--;
+
+      // Back button
+      if (currentLevel == 1) backButtonElement.disabled = true;
+
+    }
   })
   .catch(function(error) {
     // An error occurred
