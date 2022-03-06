@@ -413,6 +413,10 @@ class OpenLayerMap {
         feature.setStyle(new Style(null)); 
     }
 
+    removeAllFeatures() {
+        this.vectorSource.clear();
+    }
+
     selectFeature(mission) {
         let _this = this;
 
