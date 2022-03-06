@@ -35,7 +35,7 @@ dataClass.ajaxRequest(url)
     //console.log("workbook:", workbook);
 
     /* DO SOMETHING WITH workbook HERE */
-    let sheet_name = workbook.SheetNames[1];
+    let sheet_name = workbook.SheetNames[0];
     /* Get worksheet */
     let worksheet = workbook.Sheets[sheet_name];
     //console.log("worksheet:", worksheet);
