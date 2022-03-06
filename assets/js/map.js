@@ -38,7 +38,8 @@ class OpenLayerMap {
                 anchor: [0.5, 46],
                 anchorXUnits: 'fraction',
                 anchorYUnits: 'pixels',
-                src: './assets/img/icon.png',
+                //src: './assets/img/icon.png',
+                src: "https://drive.google.com/uc?export=download&id=1QACJLnHjJMCYrnZtRXDu_TKid1tuonzy",
             }),
         });
         
