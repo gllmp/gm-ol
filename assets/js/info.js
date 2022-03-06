@@ -115,7 +115,7 @@ class Info {
       }
     }
 
-    resetLevelInfo(level) {
+    resetLevelInfo(level = 1) {
       // Reset info panel
       if (level == 1) {
         let missionContainerElements = document.getElementsByClassName("mission-container");
@@ -133,15 +133,7 @@ class Info {
 
           // Show all mission infos
           element.classList.remove("hidden");
-        }
-        // let missionInfoElements = document.getElementsByClassName("mission-level-group");
-
-        // for (let element of missionInfoElements) {
-        //   // Show selected level infos
-        //   if (element.classList.contains("level-" + level)) {
-        //     element.style.display = "block";
-        //   }
-        // }        
+        }     
       }
     }
 
