@@ -41,12 +41,18 @@ class Info {
     createInfoMarkup(_info, _data, isLink = false, isMission = false) {
       let missionInfoElement;
 
+      let dataContent = _data;
+
       if (isLink) {
         missionInfoElement = document.createElement("a");
         missionInfoElement.href = "#";
 
-        missionInfoElement.setAttribute('data-mission', _data);
+        if (dataContent[0] == " ") dataContent = dataContent.substring(1);
+
+        missionInfoElement.setAttribute('data-mission', dataContent);
         
+        missionInfoElement.classList.add('mission-info-link');
+
         if (isMission) {
           missionInfoElement.addEventListener("click", this.onMissionSelected.bind(this));
         } else {
@@ -58,7 +64,6 @@ class Info {
       }
 
       missionInfoElement.classList.add("mission-info");
-      missionInfoElement.classList.add('mission-info-link');
       
       // Title
       let missionInfoTitleElement = document.createElement("h3");
@@ -73,7 +78,7 @@ class Info {
       missionInfoDataElement.classList.add("mission-info-data");
       missionInfoDataElement.classList.add("mission-" + _info);
       
-      missionInfoDataElement.innerHTML = _data;
+      missionInfoDataElement.innerHTML = dataContent;
       
       missionInfoElement.appendChild(missionInfoDataElement);
       
@@ -141,14 +146,17 @@ class Info {
       let mission;
       let target;
 
+      // Check for clicked element
       if (!event.target.classList.contains("mission-info-link")) {
         target = event.target.parentElement;
         mission = target.getAttribute("data-mission");
       } else {
         mission = event.target.getAttribute("data-mission");
       }
-      
-      mission = mission.split(" ")[1];
+
+      // Remove leading space if not done yet
+      //mission = mission.split(" ")[1];
+      if (mission[0] == " ") mission = mission.substring(1);
 
       let customEvent = new CustomEvent('mission-selected', {'detail': {mission}});
 
