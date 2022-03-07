@@ -123,9 +123,6 @@ dataClass.ajaxRequest(url)
       // Set level
       if (currentLevel > 1) currentLevel--;
 
-      // Back button
-      if (currentLevel == 1) backButtonElement.disabled = true;
-
       // Show level info
       info.resetLevelInfo(currentLevel);
 
@@ -134,6 +131,14 @@ dataClass.ajaxRequest(url)
 
       // Reset map view
       map.resetMapView(currentLevel, currentMission);
+
+      // Back button
+      if (currentLevel == 1) {
+        backButtonElement.disabled = true;
+
+        currentMission = "";
+        currentTool = "";
+      } 
     }
   })
   .catch(function(error) {
