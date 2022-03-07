@@ -118,6 +118,11 @@ html, body {
 .selected-tool {
   background-color: #ff0;
 }
+
+.selected-tool:focus {
+  outline: none;
+}
+
 /* MAP */
 
 #map {

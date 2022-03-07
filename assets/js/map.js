@@ -76,6 +76,10 @@ class OpenLayerMap {
          this.popUpCloser.onclick = function () {
             _this.popup.setPosition(undefined);
             _this.popUpCloser.blur();
+
+            // Deselect tool on popup close
+            _this.deselectToolInfoPanel();
+
             return false;
         };
         
@@ -152,8 +156,10 @@ class OpenLayerMap {
                     document.dispatchEvent(customEvent);
                 } else if (feature.get("type") == "tool") {
                     let mission = feature.get("mission");
-      
-                    let customEvent = new CustomEvent('tool-selected', {'detail': {mission, feature}});
+                    let tool = {};
+                    tool[Object.keys(feature.get("tool"))[0]] = Object.values(feature.get("tool"))[0];
+
+                    let customEvent = new CustomEvent('tool-selected', {'detail': {mission, tool}});
               
                     document.dispatchEvent(customEvent);
                 }
@@ -382,13 +388,20 @@ class OpenLayerMap {
         return features;
     }
 
-    getFeature(mission) {
+    getFeature(name) {
         let features = this.getFeatures();
         let feature;
 
         features.forEach(element => {
             if (element.get("type") == "mission") {
-                if (element.get("mission") == mission) {
+                if (element.get("mission") == name) {
+                    feature = element;
+                }    
+            } 
+            
+            if (element.get("type") == "tool") {
+                let toolName = Object.keys(element.get("tool"))[0];
+                if (toolName == name) {
                     feature = element;
                 }    
             }
@@ -467,6 +480,39 @@ class OpenLayerMap {
         }
     }
 
+    selectToolInfoPanel(tool) {        
+        // Get tool element
+        let toolElement;
+        let missionLinksElements = document.getElementsByClassName("mission-info-link");
+
+        for (let element of missionLinksElements) {
+            if (element.getAttribute("data-tool") != null) {
+                // If tool element found
+                if (element.getAttribute("data-tool") == tool) {
+                    toolElement = element;
+                    
+                    // Deselect tool
+                    this.deselectToolInfoPanel();
+
+                    // Highlight selected tool in info panel
+                    toolElement.classList.add("selected-tool");
+                    toolElement.focus();
+                }
+            }
+
+        }
+
+    }
+
+    deselectToolInfoPanel() {        
+        // Deselect tool
+        let selectedToolElements = document.getElementsByClassName("selected-tool");
+
+        while (selectedToolElements.length) {
+            selectedToolElements[0].classList.remove("selected-tool");
+        }
+    }
+
     showPopupInfo(feature) {
         let mission = feature.get("mission");
 
@@ -490,7 +536,7 @@ class OpenLayerMap {
                 this.popUpContent.appendChild(toolTitleElement);
                 this.popUpContent.appendChild(toolContentElement);
 
-                console.log("TOOL SELECTED: ", toolTitleElement.innerHTML);
+                console.log("TOOL SELECTED: ", toolContentElement.innerHTML);
             } 
         }
     }

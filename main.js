@@ -101,10 +101,17 @@ dataClass.ajaxRequest(url)
     }
 
     function onToolSelected(event) {
-      currentTool = Object.keys(event.detail.feature.get("tool"))[0];
+      currentTool = event.detail.tool;
+
+      let toolTitle = Object.keys(currentTool)[0];
+      let toolContent = Object.values(currentTool)[0];
+      if (toolContent[0] == " ") toolContent = toolContent.substring(1);
+
+      // Select tool in info panel
+      map.selectToolInfoPanel(toolContent);
 
       // Show infos in popup
-      let feature = event.detail.feature;
+      let feature = map.getFeature(toolTitle);
 
       map.showPopupInfo(feature);
     }
@@ -121,6 +128,9 @@ dataClass.ajaxRequest(url)
 
       // Show level info
       info.resetLevelInfo(currentLevel);
+
+      // Deselect tool
+      map.deselectToolInfoPanel();
 
       // Reset map view
       map.resetMapView(currentLevel, currentMission);
