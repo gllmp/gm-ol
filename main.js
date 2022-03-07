@@ -21,10 +21,7 @@ let currentMission = "";
 let currentTool = "";
 
 //let url = "./assets/data/Attributs_Visuel_Web.xlsx";
-let url = "https://docs.google.com/spreadsheets/d/1lXGYPIITZfSEzN4XdRXRreDcHx5vRik8/export?gid=243091869&format=csv"
-//let url = "https://istep-data-proxy.herokuapp.com/";
-//let url = "https://github.com/gllmp/gm-ol/blob/main/assets/data/Attributs_Visuel_Web.xlsx";
-//let url = "https://cdn.jsdelivr.net/gh/gllmp/gm-ol/assets/data/Attributs_Visuel_Web.xlsx";
+let url = "https://docs.google.com/spreadsheets/d/1lXGYPIITZfSEzN4XdRXRreDcHx5vRik8/export?gid=243091869&format=xlsx"
 
 dataClass.ajaxRequest(url)
   .then(function(result) {
