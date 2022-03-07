@@ -29,8 +29,9 @@ class Info {
           currentLevelInfo.forEach((info, order) => {
             let isLink = (order == 0 && i == 1) || info.includes("tool") ? true : false;
             let isMission = (order == 0 && i == 1) ? true : false;
+            let isTool = (order > 0 && info.includes("tool")) ? true : false;
 
-            let missionInfoElement = this.createInfoMarkup(info, element[info], isLink, isMission);
+            let missionInfoElement = this.createInfoMarkup(info, element[info], isLink, isMission, isTool);
 
             missionLevelGroupElement.appendChild(missionInfoElement);
           });
@@ -38,7 +39,7 @@ class Info {
       });
     }
     
-    createInfoMarkup(_info, _data, isLink = false, isMission = false) {
+    createInfoMarkup(_info, _data, isLink = false, isMission = false, isTool = false) {
       let missionInfoElement;
 
       let dataContent = _data;
@@ -55,8 +56,10 @@ class Info {
 
         if (isMission) {
           missionInfoElement.addEventListener("click", this.onMissionSelected.bind(this));
-        } else {
+        } else if (isTool) {
+          missionInfoElement.setAttribute('data-tool', dataContent);
 
+          missionInfoElement.addEventListener("click", this.onToolSelected.bind(this));
         }
 
       } else {
@@ -158,10 +161,66 @@ class Info {
       //mission = mission.split(" ")[1];
       if (mission[0] == " ") mission = mission.substring(1);
 
-      let customEvent = new CustomEvent('mission-selected', {'detail': {mission}});
+      // Check if mission already selected
+      let missionSelected = document.getElementsByClassName("selected")[0];
+
+      if (missionSelected && (missionSelected.getAttribute("data-mission") != mission)) {
+        let customEvent = new CustomEvent('mission-selected', {'detail': {mission}});
+
+        document.dispatchEvent(customEvent);    
+      }
+
+      // Dispatch event
+      if (missionSelected == undefined) {
+        let customEvent = new CustomEvent('mission-selected', {'detail': {mission}});
+
+        document.dispatchEvent(customEvent);    
+      }
+    }
+
+    onToolSelected(event) {
+      let tool = {};
+      let toolTitle;
+      let target;
+
+      // Check for clicked element
+      if (!event.target.classList.contains("mission-info-link")) {
+        target = event.target.parentElement;
+
+        // Get tool title
+        toolTitle = target.getElementsByClassName("mission-info-title")[0].innerHTML.replaceAll(" ",  "_").toLowerCase();
+
+        // Set tool data
+        tool[toolTitle] = target.getAttribute("data-tool");
+      } else {
+        target = event.target;
+
+        // Get tool title
+        toolTitle = event.target.getElementsByClassName("mission-info-title")[0].innerHTML.replaceAll(" ",  "_").toLowerCase();
+
+        // Set tool data
+        tool[toolTitle] = event.target.getAttribute("data-tool");
+      }
+      
+
+      // Highlight selected tool in info panel
+      let selectedToolElements = document.getElementsByClassName("selected-tool");
+
+      for (let element of selectedToolElements) {
+        element.classList.remove("selected-tool");
+      }
+
+      target.classList.add("selected-tool");
+
+      // Remove leading space if not done yet
+      //tool = tool.split(" ")[1];
+      //if (tool[0] == " ") tool = tool.substring(1);
+
+      let customEvent = new CustomEvent('tool-selected', {'detail': {tool}});
 
       document.dispatchEvent(customEvent);
     }
+
   }
 
 

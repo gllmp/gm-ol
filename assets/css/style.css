@@ -114,6 +114,10 @@ html, body {
   color: #00f;
 }
 
+/* tool */
+.selected-tool {
+  background-color: #ff0;
+}
 /* MAP */
 
 #map {
