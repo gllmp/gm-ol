@@ -4,6 +4,22 @@ class Data {
         
     }
 
+    getUrl() {
+        return new Promise(async function(resolve, reject) {
+
+            const requestURL = './assets/data/url.json';
+            const request = new Request(requestURL);
+            
+            const response = await fetch(request);
+            const urlText = await response.text();
+            
+            const url = JSON.parse(urlText);
+        
+            resolve(url);
+        });
+    }
+      
+
     /* Set up XMLHttpRequest */
     ajaxRequest(url) {
         return new Promise(function(resolve, reject) {
