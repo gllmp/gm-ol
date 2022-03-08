@@ -21,12 +21,12 @@ let currentMission = "";
 let currentTool = "";
 
 //let url = "./assets/data/Attributs_Visuel_Web.xlsx";
-//let sheetDriveLink = "https://docs.google.com/spreadsheets/d/1lXGYPIITZfSEzN4XdRXRreDcHx5vRik8/export?gid=243091869&format=xlsx";
-let urlDriveLink = "https://docs.google.com/spreadsheets/d/1lXGYPIITZfSEzN4XdRXRreDcHx5vRik8/export?gid=1809235000&format=xlsx";
+let url = "https://docs.google.com/spreadsheets/d/1lXGYPIITZfSEzN4XdRXRreDcHx5vRik8/export?gid=243091869&format=xlsx";
+//let urlDriveLink = "https://docs.google.com/spreadsheets/d/1lXGYPIITZfSEzN4XdRXRreDcHx5vRik8/export?gid=1809235000&format=xlsx";
 
-dataClass.ajaxRequest(urlDriveLink)
-  .then(function(result) {
-    let url = dataClass.getUrlFromDrive(result);
+// dataClass.ajaxRequest(urlDriveLink)
+//   .then(function(result) {
+//     let url = dataClass.getUrlFromDrive(result);
 
     dataClass.ajaxRequest(url)
     .then(function(result) {
@@ -140,9 +140,9 @@ dataClass.ajaxRequest(urlDriveLink)
       // An error occurred
       console.log("ERROR: ", error);
     });
-  })
-  .catch(function(error) {
-    // An error occurred
-    console.log("ERROR: ", error);
-  });
+  // })
+  // .catch(function(error) {
+  //   // An error occurred
+  //   console.log("ERROR: ", error);
+  // });
 
