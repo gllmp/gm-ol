@@ -71,6 +71,13 @@ dataClass.getUrl()
       map.addPointsFromData(result);
     })
     .then(function(result) {
+      // Hide loading icon
+      let loadingElement = document.getElementById("loading");
+      loadingElement.classList.add("hidden");
+      
+      // Show info panel and map
+      let containerElement = document.getElementById("container");
+      containerElement.classList.add("load");
 
       // Update map size after info panel resize
       let infoPanelElement = document.getElementById("info");
