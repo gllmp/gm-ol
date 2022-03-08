@@ -4,7 +4,7 @@ class Data {
         
     }
 
-    getUrl() {
+    getUrlFromFile() {
         return new Promise(async function(resolve, reject) {
 
             const requestURL = './assets/data/url.json';
@@ -18,7 +18,28 @@ class Data {
             resolve(url);
         });
     }
-      
+
+    getUrlFromDrive(_data) {
+        /* convert data to binary string */
+        let binaryString = this.toBinaryString(_data);
+
+        /* Call XLSX */
+        let workbook = XLSX.read(binaryString, {
+            type: "binary"
+        });
+        //console.log("workbook:", workbook);
+
+        // Get sheet name from workbook
+        let sheetName = workbook.SheetNames[0];
+
+        // Get worksheet
+        let worksheet = workbook.Sheets[sheetName];
+        //console.log("worksheet:", worksheet);
+        
+        let url = worksheet["A1"]["h"];
+
+        return url;
+    }
 
     /* Set up XMLHttpRequest */
     ajaxRequest(url) {

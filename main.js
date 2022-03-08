@@ -21,31 +21,16 @@ let currentMission = "";
 let currentTool = "";
 
 //let url = "./assets/data/Attributs_Visuel_Web.xlsx";
-//let url = "https://docs.google.com/spreadsheets/d/1lXGYPIITZfSEzN4XdRXRreDcHx5vRik8/export?gid=243091869&format=xlsx"
+//let sheetDriveLink = "https://docs.google.com/spreadsheets/d/1lXGYPIITZfSEzN4XdRXRreDcHx5vRik8/export?gid=243091869&format=xlsx";
+let urlDriveLink = "https://docs.google.com/spreadsheets/d/1lXGYPIITZfSEzN4XdRXRreDcHx5vRik8/export?gid=1809235000&format=xlsx";
 
-dataClass.getUrl()
-  .then(function(json) {
-    dataClass.ajaxRequest(json.url)
+dataClass.ajaxRequest(urlDriveLink)
+  .then(function(result) {
+    let url = dataClass.getUrlFromDrive(result);
+
+    dataClass.ajaxRequest(url)
     .then(function(result) {
-      /* convert data to binary string */
-      let binaryString = dataClass.toBinaryString(result);
-
-      /* Call XLSX */
-      let workbook = XLSX.read(binaryString, {
-          type: "binary"
-      });
-      
-      //console.log("workbook:", workbook);
-
-      /* DO SOMETHING WITH workbook HERE */
-      let sheet_name = workbook.SheetNames[0];
-      /* Get worksheet */
-      let worksheet = workbook.Sheets[sheet_name];
-      //console.log("worksheet:", worksheet);
-
-      let sheetData = XLSX.utils.sheet_to_json(worksheet, {
-          raw: true
-      });
+      let sheetData = dataClass.parseSheetData(result);
       console.log("SHEET DATA:", sheetData);
 
       data = dataClass.getDataFromSheet(sheetData);
