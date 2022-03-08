@@ -39,6 +39,30 @@ class Data {
         });
     }
 
+    parseSheetData(_data) {
+        /* convert data to binary string */
+        let binaryString = this.toBinaryString(_data);
+
+        /* Call XLSX */
+        let workbook = XLSX.read(binaryString, {
+            type: "binary"
+        });
+        //console.log("workbook:", workbook);
+
+        // Get sheet name from workbook
+        let sheetName = workbook.SheetNames[0];
+
+        // Get worksheet
+        let worksheet = workbook.Sheets[sheetName];
+        //console.log("worksheet:", worksheet);
+
+        let sheetData = XLSX.utils.sheet_to_json(worksheet, {
+            raw: true
+        });
+
+        return sheetData;
+    }
+
     toBinaryString(data) {
         let arraybuffer = data;
 
