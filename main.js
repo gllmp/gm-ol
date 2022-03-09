@@ -26,7 +26,7 @@ let url = "https://docs.google.com/spreadsheets/d/1lXGYPIITZfSEzN4XdRXRreDcHx5vR
 
 // dataClass.ajaxRequest(urlDriveLink)
 //   .then(function(result) {
-//     let url = dataClass.getUrlFromDrive(result);
+//     let url = dataClass.getUrlFromSheet(result);
 
     dataClass.ajaxRequest(url)
     .then(function(result) {

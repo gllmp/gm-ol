@@ -19,7 +19,7 @@ class Data {
         });
     }
 
-    getUrlFromDrive(_data) {
+    getUrlFromSheet(_data) {
         /* convert data to binary string */
         let binaryString = this.toBinaryString(_data);
 
