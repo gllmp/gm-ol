@@ -10,6 +10,7 @@ class Info {
         let missionContainerElement = document.createElement("div");
         missionContainerElement.classList.add("mission-container");
         missionContainerElement.setAttribute('data-mission', Object.keys(_levels)[index]);
+
         document.querySelector("#info").appendChild(missionContainerElement);
 
         // Add mission level groups containers
@@ -31,7 +32,10 @@ class Info {
             let isMission = (order == 0 && i == 1) ? true : false;
             let isTool = (order > 0 && info.includes("tool")) ? true : false;
 
-            let missionInfoElement = this.createInfoMarkup(info, element[info], isLink, isMission, isTool);
+            let missionName = name;
+            let toolName = element[info];
+            //let missionInfoElement = this.createInfoMarkup(info, element[info], isLink, isMission, isTool);
+            let missionInfoElement = this.createInfoMarkup(info, missionName, toolName, isLink, isMission, isTool);
 
             missionLevelGroupElement.appendChild(missionInfoElement);
           });
@@ -39,25 +43,27 @@ class Info {
       });
     }
     
-    createInfoMarkup(_info, _data, isLink = false, isMission = false, isTool = false) {
+    createInfoMarkup(_info, missionName, toolName, isLink = false, isMission = false, isTool = false) {
       let missionInfoElement;
 
-      let dataContent = _data;
+      let dataContent = isMission ? missionName : toolName;
+      //let dataContent = missionName;
 
       if (isLink) {
         missionInfoElement = document.createElement("a");
         missionInfoElement.href = "#";
 
-        if (dataContent[0] == " ") dataContent = dataContent.substring(1);
+        if (missionName[0] == " ") missionName = missionName.substring(1);
+        if (toolName[0] == " ") toolName = toolName.substring(1);
 
-        missionInfoElement.setAttribute('data-mission', dataContent);
+        missionInfoElement.setAttribute('data-mission', missionName);
         
         missionInfoElement.classList.add('mission-info-link');
 
         if (isMission) {
           missionInfoElement.addEventListener("click", this.onMissionSelected.bind(this));
         } else if (isTool) {
-          missionInfoElement.setAttribute('data-tool', dataContent);
+          missionInfoElement.setAttribute('data-tool', toolName);
 
           missionInfoElement.addEventListener("click", this.onToolSelected.bind(this));
         }

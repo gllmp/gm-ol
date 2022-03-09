@@ -480,7 +480,7 @@ class OpenLayerMap {
         }
     }
 
-    selectToolInfoPanel(tool) {        
+    selectToolInfoPanel(mission, tool) {    
         // Get tool element
         let toolElement;
         let missionLinksElements = document.getElementsByClassName("mission-info-link");
@@ -488,15 +488,16 @@ class OpenLayerMap {
         for (let element of missionLinksElements) {
             if (element.getAttribute("data-tool") != null) {
                 // If tool element found
-                if (element.getAttribute("data-tool") == tool) {
-                    toolElement = element;
-                    
-                    // Deselect tool
-                    this.deselectToolInfoPanel();
+                if (element.getAttribute("data-mission") == mission) {
+                    if (element.getAttribute("data-tool") == tool) {
+                        toolElement = element;
+                        // Deselect tool
+                        this.deselectToolInfoPanel();
 
-                    // Highlight selected tool in info panel
-                    toolElement.classList.add("selected-tool");
-                    toolElement.focus();
+                        // Highlight selected tool in info panel
+                        toolElement.classList.add("selected-tool");
+                        toolElement.focus();
+                    }
                 }
             }
 

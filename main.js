@@ -103,8 +103,8 @@ let url = "https://docs.google.com/spreadsheets/d/1lXGYPIITZfSEzN4XdRXRreDcHx5vR
         if (toolContent[0] == " ") toolContent = toolContent.substring(1);
 
         // Select tool in info panel
-        map.selectToolInfoPanel(toolContent);
-
+        map.selectToolInfoPanel(currentMission, toolContent);
+        
         // Show infos in popup
         let feature = map.getFeature(toolTitle);
 
