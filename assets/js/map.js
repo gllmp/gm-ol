@@ -517,9 +517,9 @@ class OpenLayerMap {
     }
 
     showPopupInfo(feature) {
-        let mission = feature.get("mission");
-
         if (feature != undefined) {
+            let mission = feature.get("mission");
+
             if (feature.get("type") == "tool") {
                 let popupCoordinates = feature.getGeometry().getCoordinates();
 
