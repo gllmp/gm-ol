@@ -18,6 +18,8 @@ import {toLonLat, fromLonLat} from 'ol/proj';
 import {toStringHDMS} from 'ol/coordinate';
 import * as Easing from 'ol/easing';
 
+import circleIcon from '../img/circle-icon.png';
+
 class OpenLayerMap {
     constructor(_data) {
         let _this = this;
@@ -39,8 +41,7 @@ class OpenLayerMap {
                 anchorXUnits: 'fraction',
                 anchorYUnits: 'pixels',
                 //src: './assets/img/icon.png',
-                //src: './assets/img/circle-icon.png',
-                src: './circle-icon.png',
+                src: circleIcon,
                 //src: "https://drive.google.com/uc?export=download&id=1QACJLnHjJMCYrnZtRXDu_TKid1tuonzy",
                 //src: "https://drive.google.com/uc?export=download&id=1Jc8jthWYCkzynAwWvF0CJyN1lKQs8bRB",
             }),
