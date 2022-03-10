@@ -81,8 +81,8 @@ html, body {
   width: 30%;
   min-width: 200px;
   max-width: 30%;
-  height: -webkit-fill-available;
-  /* height: calc(100% - 2em); */
+  /* height: -webkit-fill-available; */
+  height: calc(100% - 2em);
   resize: horizontal;
   padding: 1em;
   background-color: #353f47;
@@ -90,7 +90,7 @@ html, body {
   border-right: 1px solid #000;
   position: relative;
   z-index: 1;
-  overflow: auto;
+  overflow: scroll;
 }
 
 #info h1 {
