@@ -40,8 +40,9 @@ class OpenLayerMap {
                 anchorYUnits: 'pixels',
                 //src: './assets/img/icon.png',
                 //src: './assets/img/circle-icon.png',
+                src: './circle-icon.png',
                 //src: "https://drive.google.com/uc?export=download&id=1QACJLnHjJMCYrnZtRXDu_TKid1tuonzy",
-                src: "https://drive.google.com/uc?export=download&id=1Jc8jthWYCkzynAwWvF0CJyN1lKQs8bRB",
+                //src: "https://drive.google.com/uc?export=download&id=1Jc8jthWYCkzynAwWvF0CJyN1lKQs8bRB",
             }),
         });
         
