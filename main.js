@@ -21,8 +21,12 @@ let currentMission = "";
 let currentTool = "";
 
 //let url = "./assets/data/Attributs_Visuel_Web.xlsx";
+
 let url = "https://docs.google.com/spreadsheets/d/1lXGYPIITZfSEzN4XdRXRreDcHx5vRik8/export?gid=243091869&format=xlsx";
 //let urlDriveLink = "https://docs.google.com/spreadsheets/d/1lXGYPIITZfSEzN4XdRXRreDcHx5vRik8/export?gid=1809235000&format=xlsx";
+
+// Shared Drive datasheet
+//let url = "https://docs.google.com/spreadsheets/d/1bbnGpoY-GlW10ZfhrK8qIIGh2yS2V1Mo/export?gid=243091869&format=xlsx";
 
 // dataClass.ajaxRequest(urlDriveLink)
 //   .then(function(result) {
