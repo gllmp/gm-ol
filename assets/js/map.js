@@ -145,6 +145,8 @@ class OpenLayerMap {
 
         // Display popup on click
         this.map.on('click', function (evt) {
+            evt.preventDefault();
+
             const feature = _this.map.forEachFeatureAtPixel(evt.pixel, function (feature) {
                 return feature;
             });

@@ -152,6 +152,8 @@ class Info {
     }
 
     onMissionSelected(event) {
+      event.preventDefault();
+
       let mission;
       let target;
 
@@ -185,6 +187,8 @@ class Info {
     }
 
     onToolSelected(event) {
+      event.preventDefault();
+      
       let tool = {};
       let toolTitle;
       let target;
