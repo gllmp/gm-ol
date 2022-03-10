@@ -35,11 +35,13 @@ class OpenLayerMap {
         
         this.iconStyle = new Style({
             image: new Icon({
-                anchor: [0.5, 46],
+                anchor: [0.55, 18],
                 anchorXUnits: 'fraction',
                 anchorYUnits: 'pixels',
                 //src: './assets/img/icon.png',
-                src: "https://drive.google.com/uc?export=download&id=1QACJLnHjJMCYrnZtRXDu_TKid1tuonzy",
+                //src: './assets/img/circle-icon.png',
+                //src: "https://drive.google.com/uc?export=download&id=1QACJLnHjJMCYrnZtRXDu_TKid1tuonzy",
+                src: "https://drive.google.com/uc?export=download&id=1Jc8jthWYCkzynAwWvF0CJyN1lKQs8bRB",
             }),
         });
         
