@@ -12,6 +12,7 @@ html, body {
   height: 100%;
   font-family: "Source Code Pro", monospace, Arial, Helvetica, sans-serif;
   font-size: 12px;
+  background-color: #353f47;
   overflow: hidden;
 }
 
@@ -47,7 +48,7 @@ html, body {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 10%;
+  width: 8%;
 }
 
 /* HEADER */
@@ -60,15 +61,18 @@ html, body {
   width: 100%;
   height: 8%;
   padding-left: 1em;
-  background-color: #41799c;
+  background-color: #37586c;
   box-shadow: 0 3px 5px 0px rgba(0, 0, 0, 0.5);
   position: relative;
   z-index: 2;
 }
 
 #header h1 {
-  color: #d5d5d5;
+  color: #fefefe;
   text-shadow: 2px 2px rgba(0,0,0,0.2);
+  text-decoration: underline;
+  text-decoration-color: #8f8f8f;
+  text-underline-offset: 0.4em;
 }
 
 /* INFO */
@@ -81,7 +85,7 @@ html, body {
   /* height: calc(100% - 2em); */
   resize: horizontal;
   padding: 1em;
-  background-color: rgba(245,245,245, 1);
+  background-color: #353f47;
   box-shadow: 0 0px 5px 2px rgba(0, 0, 0, 0.5);
   border-right: 1px solid #000;
   position: relative;
@@ -103,20 +107,14 @@ html, body {
   align-items: flex-start;
   width: 100%;
   margin-bottom: 2em;
-  border-bottom: 1px solid #000;
+  border-bottom: 1px solid #8f8f8f;
+  box-shadow: 0px 1px 0px rgb(0 0 0 / 20%);
 }
 
 .page-title {
+  color: #fefefe;
+  text-shadow: 2px 2px rgba(0,0,0,0.2);
   text-decoration: none;
-  color: #000;
-}
-
-#back-button {
-  margin-top: 2em;
-}
-
-#back-button:hover {
-  cursor: pointer;
 }
 
 .selected {
@@ -128,12 +126,14 @@ html, body {
 }
 
 .mission-container {
-  border-bottom: 1px solid #000;
   margin-bottom: 1em;
+  /* border-bottom: 1px solid #000; */
+  box-shadow: 2px 2px 2px rgb(0 0 0 / 50%);
 }
 
 .mission-level-group {
   display: none;
+  background-color: #3f535f;
 }
 
 .mission-level-group:not(:last-child) {
@@ -151,7 +151,11 @@ html, body {
   margin: 0;
   margin-bottom: 0.5em;
   font-size: 14px;
-  color: #000;
+  color: #fefefe;
+  text-shadow: 2px 2px rgba(0,0,0,0.2);
+  text-decoration: underline;
+  text-decoration-color: #8f8f8f;
+  text-underline-offset: 0.4em;
 }
 
 .mission-info-link {
@@ -162,17 +166,20 @@ html, body {
 
 /* mission title */
 .selected .mission-level-group:first-child .mission-info:first-child {
-  background-color: #ff0;
+  background-color: #1f5a7d;
+  box-shadow: 2px 2px 2px rgb(0 0 0 / 20%);
 }
 
 .mission-info-data {
   text-decoration: none;
-  color: #00f;
+  color: #fff;
+  text-shadow: 2px 2px rgba(0,0,0,0.2); 
 }
 
 /* tool */
 .selected-tool {
-  background-color: #ff0;
+  background-color: #1f5a7d;
+  box-shadow: 2px 2px 2px rgb(0 0 0 / 20%);
 }
 
 .selected-tool:focus {
@@ -184,15 +191,15 @@ html, body {
 #map {
   width: 100%;
   height: 100%;
+  position: relative;
 }
 
 .ol-popup {
   position: absolute;
-  background-color: white;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  background-color: #353f47;
+  box-shadow: 4px 4px 4px rgb(0 0 0 / 50%);
   padding: 15px;
   border-radius: 10px;
-  border: 1px solid #cccccc;
   bottom: 12px;
   left: -50px;
   min-width: 200px;
@@ -209,38 +216,70 @@ html, body {
   pointer-events: none;
 }
 
-.ol-popup:after {
-  border-top-color: white;
-  border-width: 10px;
-  left: 48px;
-  margin-left: -10px;
-}
-
 .ol-popup:before {
-  border-top-color: #cccccc;
+  border-top-color: #353f47;
   border-width: 11px;
   left: 48px;
   margin-left: -11px;
 }
 
+.ol-popup:after {
+  border-top-color: #353f47;
+  border-width: 10px;
+  left: 48px;
+  margin-left: -10px;
+}
+
 .ol-popup-closer {
-  color: #00f;
-  font-size: 20px;
+  color: #fff;
+  text-shadow: 2px 2px rgba(0,0,0,0.2); 
+  font-size: 22px;
   text-decoration: none;
   position: absolute;
-  top: 2px;
-  right: 8px;
+  top: 4px;
+  right: 12px;
 }
 
 .ol-popup-closer:after {
   content: "✖";
 }
 
+#popup-content {
+  color: #fff;
+  text-shadow: 2px 2px rgba(0,0,0,0.2); 
+}
+
 .tool-title {
   margin: 0;
   font-size: 20px;
+  text-decoration: underline;
+  text-decoration-color: #d4d4d4;
+  text-underline-offset: 0.4em;
 }
 
 .tool-content {
 
+}
+
+#back-button {
+  /* margin-top: 2em; */
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  z-index: 2;
+  padding: 0.5em;
+  padding-top: 0.6em;
+  color: #fff;
+  text-shadow: 2px 2px rgba(0,0,0,0.2); 
+  background-color: #36586c;
+  box-shadow: 2px 2px 2px rgb(0 0 0 / 20%);
+  opacity: 1;
+}
+
+#back-button:hover {
+  cursor: pointer;
+}
+
+#back-button:disabled {
+  opacity: 0.5;
 }
