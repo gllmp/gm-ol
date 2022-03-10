@@ -186,12 +186,40 @@ html, body {
   outline: none;
 }
 
+/* SCROLLBAR */
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #353f47;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  /* background: #255f82;  */
+  background: rgba(66,99,120, 1);
+}
+
+/* Handle on hover */
+/* ::-webkit-scrollbar-thumb:hover {
+  cursor: pointer;
+} */
+
 /* MAP */
 
 #map {
   width: 100%;
   height: 100%;
   position: relative;
+}
+
+/* POPUP */
+
+#popup {
+  
 }
 
 .ol-popup {
@@ -258,7 +286,8 @@ html, body {
 }
 
 .tool-content {
-
+  max-height: 300px;
+  overflow: auto;
 }
 
 #back-button {

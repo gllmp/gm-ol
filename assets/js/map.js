@@ -68,16 +68,18 @@ class OpenLayerMap {
         // Create an overlay to anchor the popup to the map
         this.popup = new Overlay({
             element: this.popUpContainer,
-            autoPan: {
-                animation: {
-                    duration: 250,
-                },
+            autoPan: true,
+            autoPanAnimation:
+            {
+                duration: 250,
             },
+            autoPanMargin: 20,
+            
         });
         
         // add a click handler to hide the popup
         // @return {boolean} Don't follow the href
-         this.popUpCloser.onclick = function () {
+        this.popUpCloser.onclick = function () {
             _this.popup.setPosition(undefined);
             _this.popUpCloser.blur();
 
